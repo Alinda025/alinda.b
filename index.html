@@ -506,24 +506,85 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
 .rstate b{font-weight:700}
 .panel p{margin:14px 0 0}
 
-/* interactive BIM model */
-.bimv{margin:26px 0 0;padding-top:20px;border-top:1px solid var(--rule)}
-.bimv-t{font-size:22px;margin-top:4px}
-.bimv-stage{position:relative;margin-top:14px;border:1px solid var(--rule);background:var(--panel) url(model-poster.webp) center/contain no-repeat;aspect-ratio:16/9;min-height:320px}
-.bimv-stage model-viewer{width:100%;height:100%;display:block;background:transparent;--poster-color:transparent}
-.bimv-stage:fullscreen{aspect-ratio:auto;width:100vw;height:100vh;border:0}
-.bimv-load{position:absolute;left:16px;bottom:14px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);pointer-events:none}
-.bimv-load[hidden]{display:none}
-.bimv-load b{display:block;width:120px;height:3px;background:var(--rule)}
-.bimv-load i{display:block;height:100%;width:0;background:var(--link);transition:width .2s}
-.bimv-tools{position:absolute;right:12px;top:12px;display:flex;gap:8px}
-.bimv-tools button{font:inherit;font-size:14px;background:var(--bg);color:var(--link);border:1px solid var(--rule);border-radius:2px;padding:3px 10px;cursor:pointer}
-.bimv-tools button:hover{border-color:var(--link)}
-.bimv-hint{font-size:14px;color:var(--muted);margin-top:8px}
-.bimv-leg{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:14px;color:var(--fg)}
-.bimv-leg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid var(--rule)}
-.bimv figcaption{font-size:16px;color:var(--fg);margin-top:12px;line-height:1.65}
-@media (max-width:640px){.bimv-stage{aspect-ratio:4/5}.bimv-t{font-size:20px}}
+/* project case study + BIM viewer */
+.case{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--rule)}
+.case-t{font-size:24px;margin-top:4px}
+.case-lead{margin:10px 0 0;font-size:17px;line-height:1.7}
+.case-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:16px 0 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.case-meta>div{padding:10px 16px 10px 0}
+.case-meta>div+div{padding-left:16px;border-left:1px solid var(--rule)}
+.case-meta dt,.case-list dt{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.case-meta dd{margin:2px 0 0;font-size:15px;line-height:1.5}
+.case-sec h4,.bv-h{font-size:19px;font-weight:700;margin:22px 0 8px}
+.case-sec p{margin:0;line-height:1.7}
+.case-flow{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 0;counter-reset:s;font-size:15px}
+.case-flow li{counter-increment:s;display:flex;align-items:center}
+.case-flow li::before{content:counter(s);display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--strip);color:var(--fg);font-size:12px;margin-right:6px}
+.case-flow li+li::after{content:none}
+.case-flow li:not(:last-child)::after{content:"→";color:var(--muted);margin:0 10px}
+.case-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 44px}
+.case-list{display:grid;grid-template-columns:130px minmax(0,1fr);gap:8px 16px;margin:0}
+.case-list dt{padding-top:3px}
+.case-list dd{margin:0;line-height:1.6}
+@media (max-width:820px){.case-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.case-meta>div:nth-child(3){border-left:0;padding-left:0}.case-meta>div:nth-child(n+3){border-top:1px solid var(--rule)}.case-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.case-meta{grid-template-columns:minmax(0,1fr)}.case-meta>div+div{border-left:0;padding-left:0;border-top:1px solid var(--rule)}.case-list{grid-template-columns:minmax(0,1fr);gap:0}.case-list dd{margin-bottom:10px}}
+
+:root{--bv-bg:#eef2f6;--bv-line:#b9c3ce;--bv-sel:#ffcf33}
+:root[data-theme="dark"]{--bv-bg:#232a33;--bv-line:#46505c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bv-bg:#232a33;--bv-line:#46505c}}
+.bv{border:1px solid var(--bv-line);background:var(--bg);display:flex;flex-direction:column}
+.bv-bar{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--bv-line);flex-wrap:wrap}
+.bv-sp{flex:1}
+.bv-b{font:inherit;font-size:14px;display:inline-flex;align-items:center;gap:6px;background:var(--bg);color:var(--fg);border:1px solid var(--rule);border-radius:2px;padding:3px 10px;cursor:pointer;line-height:1.5}
+.bv-b:hover{border-color:var(--link);color:var(--link)}
+.bv-b svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bv-b[hidden]{display:none}
+#bvNav[aria-expanded="true"]{background:var(--strip);border-color:var(--link);color:var(--link)}
+.bv-body{position:relative;display:grid;grid-template-columns:260px minmax(0,1fr);height:clamp(380px,58vw,620px)}
+.bv[data-nav="closed"] .bv-body{grid-template-columns:0 minmax(0,1fr)}
+.bv[data-nav="closed"] .bv-nav{visibility:hidden}
+.bv-nav{overflow:auto;border-right:1px solid var(--bv-line);background:var(--bg);font-size:14px;padding:6px 0 10px}
+.bv-nh{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:8px 12px 4px}
+.bv-row{display:flex;align-items:center;gap:4px;padding:2px 10px 2px 6px;min-height:28px;cursor:default;border-left:2px solid transparent}
+.bv-row[data-g]{cursor:pointer;padding-left:24px}
+.bv-row[data-g]:hover{background:var(--panel)}
+.bv-row.on{background:var(--strip);border-left-color:var(--link)}
+.bv-row:focus-visible{outline:2px solid var(--link);outline-offset:-2px}
+.bv-d{font-weight:600;border-top:1px solid var(--rule);margin-top:2px}
+.bv-root{font-weight:600}
+.bv-c{width:18px;height:18px;flex:none;display:grid;place-items:center;background:none;border:0;padding:0;color:var(--muted);cursor:pointer}
+.bv-c svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;transition:transform .15s}
+.bv-row[aria-expanded="true"] .bv-c svg{transform:rotate(90deg)}
+.bv-kids[hidden]{display:none}
+.bv-eye{width:22px;height:22px;flex:none;display:grid;place-items:center;background:none;border:0;padding:0;color:var(--fg);cursor:pointer;border-radius:2px}
+.bv-eye:hover{background:var(--panel)}
+.bv-eye svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8}
+.bv-eye[aria-pressed="false"]{color:var(--faint);opacity:.45}
+.bv-sw{width:10px;height:10px;border-radius:2px;flex:none;margin:0 4px 0 2px;border:1px solid rgba(0,0,0,.15)}
+.bv-lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bv-n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bv-lv{display:flex;flex-wrap:wrap;gap:6px;padding:4px 12px}
+.bv-chip{font:inherit;font-size:13px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:2px;padding:1px 10px;cursor:pointer}
+.bv-chip[aria-pressed="true"]{border-color:var(--link);color:var(--link);background:var(--strip)}
+.bv-stage{position:relative;background:var(--bv-bg);min-width:0;overflow:hidden}
+.bv-stage canvas{display:block;width:100%;height:100%;touch-action:none}
+.bv-load{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-size:14px;color:var(--muted);background:var(--bv-bg) url(model-poster.webp) center/contain no-repeat}
+.bv-load[hidden]{display:none}
+.bv-load span{background:var(--bv-bg);padding:2px 8px}
+.bv-load b{display:block;width:140px;height:3px;background:var(--rule)}
+.bv-load i{display:block;height:100%;width:0;background:var(--link);transition:width .2s}
+.bv-status{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;padding:6px 10px;border-top:1px solid var(--bv-line);font-size:14px;min-height:40px}
+.bv-sel{flex:1;min-width:0;color:var(--muted);overflow-wrap:anywhere}
+.bv-acts{display:flex;gap:6px;flex-wrap:wrap}
+.bv-hint{font-size:14px;color:var(--muted);margin:8px 0 0}
+.bv:fullscreen{width:100vw;height:100vh;border:0}
+.bv:fullscreen .bv-body{height:auto;flex:1}
+@media (max-width:1000px){.bv-body{grid-template-columns:220px minmax(0,1fr)}}
+@media (max-width:700px){
+  .bv-body,.bv[data-nav="closed"] .bv-body{grid-template-columns:minmax(0,1fr);height:clamp(380px,110vw,560px)}
+  .bv-nav{position:absolute;left:0;top:0;bottom:0;width:min(82%,280px);z-index:3;border-right:1px solid var(--bv-line)}
+  .bv-b{padding:3px 8px}
+}
 </style>
 </head><body>
 <header class="wrap util">
@@ -601,7 +662,7 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
 <section class="wrap sec" id="publications" aria-labelledby="pub-h">
   <div class="sec-head"><h2 id="pub-h">Publications &amp; projects</h2><a class="meta" href="https://scholar.google.com/citations?user=PA7FRkMAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar ↗</a></div>
   <div class="atabs" role="tablist" aria-label="Publications and projects"><button role="tab" id="tab0" aria-controls="tp0" aria-selected="true" tabindex="0">Publications</button><button role="tab" id="tab1" aria-controls="tp1" aria-selected="false" tabindex="-1">Research projects</button><button role="tab" id="tab2" aria-controls="tp2" aria-selected="false" tabindex="-1">Industry projects</button><button role="tab" id="tab3" aria-controls="tp3" aria-selected="false" tabindex="-1">Academic projects</button></div>
-  <div role="tabpanel" id="tp0" aria-labelledby="tab0" class="agrid"><article class="acard" id="pub0"><div class="akind">Research article<span class="dot" aria-hidden="true"></span><span class="oa">Open access</span></div><h3><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener">Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate"><i>Civil Engineering Sciences</i> · June 2026</div><div class="alink"><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Rana, M. J., Zaman, A. A. U., &amp; Dang, H. (2026). Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM for enhanced decision-making and optimization. Civil Engineering Sciences, 2, Article 0022. doi:10.34133/cesci.0022">Cite</button></div></article><article class="acard" id="pub1"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener">Automation in construction quality control: Integrating UAV, CNNs, and photogrammetry for structural element detection</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Ahmed, E., &amp; Rana, M. J. (2025). Automation in construction quality control: Integrating Unmanned Aerial Vehicle (UAV), CNNs, and photogrammetry for structural element detection and measurement precision. Advances in Engineering Research, 181–189. doi:10.2991/978-94-6463-884-4_22">Cite</button></div></article><article class="acard" id="pub2"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener">Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach</a></h3><div class="aauth">Estiak Ahmed, <b>Alinda Bhattacharjee</b>, Afia Anzum</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Ahmed, E., Bhattacharjee, A., &amp; Anzum, A. (2025). Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach. Advances in Engineering Research, 120–127. doi:10.2991/978-94-6463-884-4_15">Cite</button></div></article></div><div role="tabpanel" id="tp1" aria-labelledby="tab1" class="agrid" hidden><article class="acard"><div class="akind">Undergraduate thesis<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Real-time construction progress monitoring: Integrating UAV, photogrammetry and BIM technologies</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology · 2024</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Journal output</span></div><h3><a href="#pub0">UAV photogrammetry, point clouds and 4D BIM for element-level progress detection in Navisworks</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate">88.2% accuracy · 2026</div><div class="alink"><a href="#pub0"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Conference output</span></div><h3><a href="#pub1">CNN-based detection of structural elements and measurement precision from UAV imagery</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate">2025</div><div class="alink"><a href="#pub1"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Seminar project<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Application of BIM in Building Energy Performance Simulation (BEPS)</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div><div role="tabpanel" id="tp2" aria-labelledby="tab2" class="agrid" hidden><article class="acard"><div class="akind">Interactive model<span class="dot" aria-hidden="true"></span><span class="">Revit → IFC</span></div><h3><a href="#bim-model">Complete HVAC and plumbing design for a single-family residential building</a></h3><div class="aauth">Ventilation, heating, water and drainage systems in 3D</div><div class="adate">2025 – Present</div><div class="alink"><a href="#bim-model"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View 3D model</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">Prefabrication</span></div><h3><a href="#experience">Prefabricated HVAC and plumbing design for 7+ multistoried residential and commercial apartments (NEN / ISSO)</a></h3><div class="aauth">Including prefabrication drawings for a 23-story building</div><div class="adate">January 2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">NEN / ISSO</span></div><h3><a href="#residential-tech">50+ complete HVAC and plumbing installation models for single residential houses</a></h3><div class="aauth">Autodesk Revit · Dutch NEN and ISSO compliance</div><div class="adate">2025 – Present</div><div class="alink"><a href="#residential-tech"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article><article class="acard"><div class="akind">Automation<span class="dot" aria-hidden="true"></span><span class="">Dynamo · pyRevit</span></div><h3><a href="#experience">Automated prefabrication assemblies and RFA families for plumbing and ventilation systems</a></h3><div class="aauth">Plus visual-programming checks of reducer and Muff (MOF) spigot connections</div><div class="adate">2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Calculation project<span class="dot" aria-hidden="true"></span><span class="">Vabi Elements</span></div><h3><a href="#heat-loss">Heat-loss calculation with Vabi Elements to NEN-EN 12831 and ISSO 51 / 53 / 57</a></h3><div class="aauth">Room-by-room heating demand, cooling load and zone-specific calculations</div><div class="adate">Technical note</div><div class="alink"><a href="#heat-loss"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article></div><div role="tabpanel" id="tp3" aria-labelledby="tab3" class="agrid" hidden><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">ETABS</span></div><h3><a href="#projects">Structural analysis of a twelve-story residential building</a></h3><div class="aauth">Structural modelling and analysis</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Primavera P6</span></div><h3><a href="#projects">Project planning and scheduling with duration optimization</a></h3><div class="aauth">WBS, scheduling and resource allocation</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Group project</span></div><h3><a href="#projects">Residential building design and estimation</a></h3><div class="aauth">Working drawings (5-story) and material cost estimate (6-story)</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div>
+  <div role="tabpanel" id="tp0" aria-labelledby="tab0" class="agrid"><article class="acard" id="pub0"><div class="akind">Research article<span class="dot" aria-hidden="true"></span><span class="oa">Open access</span></div><h3><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener">Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate"><i>Civil Engineering Sciences</i> · June 2026</div><div class="alink"><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Rana, M. J., Zaman, A. A. U., &amp; Dang, H. (2026). Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM for enhanced decision-making and optimization. Civil Engineering Sciences, 2, Article 0022. doi:10.34133/cesci.0022">Cite</button></div></article><article class="acard" id="pub1"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener">Automation in construction quality control: Integrating UAV, CNNs, and photogrammetry for structural element detection</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Ahmed, E., &amp; Rana, M. J. (2025). Automation in construction quality control: Integrating Unmanned Aerial Vehicle (UAV), CNNs, and photogrammetry for structural element detection and measurement precision. Advances in Engineering Research, 181–189. doi:10.2991/978-94-6463-884-4_22">Cite</button></div></article><article class="acard" id="pub2"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener">Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach</a></h3><div class="aauth">Estiak Ahmed, <b>Alinda Bhattacharjee</b>, Afia Anzum</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Ahmed, E., Bhattacharjee, A., &amp; Anzum, A. (2025). Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach. Advances in Engineering Research, 120–127. doi:10.2991/978-94-6463-884-4_15">Cite</button></div></article></div><div role="tabpanel" id="tp1" aria-labelledby="tab1" class="agrid" hidden><article class="acard"><div class="akind">Undergraduate thesis<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Real-time construction progress monitoring: Integrating UAV, photogrammetry and BIM technologies</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology · 2024</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Journal output</span></div><h3><a href="#pub0">UAV photogrammetry, point clouds and 4D BIM for element-level progress detection in Navisworks</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate">88.2% accuracy · 2026</div><div class="alink"><a href="#pub0"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Conference output</span></div><h3><a href="#pub1">CNN-based detection of structural elements and measurement precision from UAV imagery</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate">2025</div><div class="alink"><a href="#pub1"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Seminar project<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Application of BIM in Building Energy Performance Simulation (BEPS)</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div><div role="tabpanel" id="tp2" aria-labelledby="tab2" class="agrid" hidden><article class="acard"><div class="akind">Project case study<span class="dot" aria-hidden="true"></span><span class="">Revit → IFC</span></div><h3><a href="#bim-model">Complete HVAC and plumbing design for a single-family residential building</a></h3><div class="aauth">Case study with interactive BIM model and navigator</div><div class="adate">2025 – Present</div><div class="alink"><a href="#bim-model"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View 3D model</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">Prefabrication</span></div><h3><a href="#experience">Prefabricated HVAC and plumbing design for 7+ multistoried residential and commercial apartments (NEN / ISSO)</a></h3><div class="aauth">Including prefabrication drawings for a 23-story building</div><div class="adate">January 2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">NEN / ISSO</span></div><h3><a href="#residential-tech">50+ complete HVAC and plumbing installation models for single residential houses</a></h3><div class="aauth">Autodesk Revit · Dutch NEN and ISSO compliance</div><div class="adate">2025 – Present</div><div class="alink"><a href="#residential-tech"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article><article class="acard"><div class="akind">Automation<span class="dot" aria-hidden="true"></span><span class="">Dynamo · pyRevit</span></div><h3><a href="#experience">Automated prefabrication assemblies and RFA families for plumbing and ventilation systems</a></h3><div class="aauth">Plus visual-programming checks of reducer and Muff (MOF) spigot connections</div><div class="adate">2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Calculation project<span class="dot" aria-hidden="true"></span><span class="">Vabi Elements</span></div><h3><a href="#heat-loss">Heat-loss calculation with Vabi Elements to NEN-EN 12831 and ISSO 51 / 53 / 57</a></h3><div class="aauth">Room-by-room heating demand, cooling load and zone-specific calculations</div><div class="adate">Technical note</div><div class="alink"><a href="#heat-loss"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article></div><div role="tabpanel" id="tp3" aria-labelledby="tab3" class="agrid" hidden><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">ETABS</span></div><h3><a href="#projects">Structural analysis of a twelve-story residential building</a></h3><div class="aauth">Structural modelling and analysis</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Primavera P6</span></div><h3><a href="#projects">Project planning and scheduling with duration optimization</a></h3><div class="aauth">WBS, scheduling and resource allocation</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Group project</span></div><h3><a href="#projects">Residential building design and estimation</a></h3><div class="aauth">Working drawings (5-story) and material cost estimate (6-story)</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div>
 </section>
 
 <section class="wrap sec" id="experience" aria-labelledby="ex-h">
@@ -620,53 +681,187 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
       <li>Used Dynamo and pyRevit to automate prefabrication assemblies for plumbing and ventilation systems and to generate RFA families for complete apartment plumbing assemblies with accurate connector placement.</li>
       <li>Developed visual programming workflows to verify pipe-to-reducer connections and Muff (MOF) spigot connections in plumbing and ventilation systems.</li>
     </ul>
-    <figure class="bimv" id="bim-model" aria-labelledby="bimv-t">
-      <div class="label">Interactive BIM model · Autodesk Revit → IFC</div>
-      <h3 class="bimv-t" id="bimv-t">Complete HVAC and plumbing design for a single-family residential building</h3>
-      <div class="bimv-stage" id="bimStage">
-        <model-viewer id="bimMV" data-src="model.glb" poster="model-poster.webp" loading="lazy" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="10deg" interaction-prompt="none" tone-mapping="neutral" exposure="0.7" shadow-intensity="0" camera-orbit="-30deg 72deg auto" field-of-view="24deg" touch-action="pan-y" alt="3D BIM model of the HVAC and plumbing systems of a single-family house">
-          <div slot="progress-bar"></div>
-        </model-viewer>
-        <div class="bimv-load" id="bimLoad" aria-live="polite"><span>Loading 3D model</span><b><i id="bimBar"></i></b></div>
-        <div class="bimv-tools"><button type="button" id="bimReset">Reset view</button><button type="button" id="bimFull">Fullscreen</button></div>
+    <article class="case" id="bim-model" aria-labelledby="case-t">
+      <div class="label">Project case study · Single-family residential building</div>
+      <h3 class="case-t" id="case-t">Complete HVAC &amp; Plumbing Design for a Single-Family Residential Building</h3>
+      <p class="case-lead">Alinda Bhattacharjee developed the complete HVAC and plumbing design for a single-family house from the architectural information supplied for the project. The work covered the engineering calculations, system layout and spatial coordination required to turn that input into an installable design, delivered as a coordinated BIM model and IFC file.</p>
+      <dl class="case-meta">
+        <div><dt>Project inputs</dt><dd>Building Decree report · architectural drawings · architectural IFC model</dd></div>
+        <div><dt>Disciplines</dt><dd>Ventilation · heating · domestic water · drainage · PVT piping</dd></div>
+        <div><dt>Deliverable</dt><dd>Coordinated MEP BIM model · IFC</dd></div>
+        <div><dt>Software</dt><dd>Autodesk Revit → IFC</dd></div>
+      </dl>
+      <div class="case-sec">
+        <h4>Engineering scope</h4>
+        <ol class="case-flow" aria-label="Design workflow"><li>Architectural input</li><li>Engineering calculations</li><li>HVAC &amp; plumbing systems</li><li>Spatial coordination</li><li>Installation checks</li><li>Coordinated BIM model</li><li>IFC</li></ol>
       </div>
-      <div class="bimv-hint">Drag to rotate · scroll or pinch to zoom · right-drag or two fingers to pan</div>
-      <ul class="bimv-leg" aria-label="System colours"><li><i style="background:#c4262e"></i>Heating flow</li><li><i style="background:#0c7dbb"></i>Heating return</li><li><i style="background:#3ba55c"></i>Ventilation supply</li><li><i style="background:#a8a7a2"></i>Ventilation exhaust</li><li><i style="background:#1f2d7b"></i>Cold water</li><li><i style="background:#e9711c"></i>Hot water</li><li><i style="background:#6b6b6b"></i>Drainage</li><li><i style="background:#d6d8dc"></i>Equipment &amp; supports</li></ul>
-      <figcaption>Alinda Bhattacharjee developed the complete HVAC and plumbing design from the architectural IFC model, drawings and Building Decree requirements. The scope covered ventilation and airflow calculations, duct sizing and routing, heat-loss and heat-pump sizing, water-flow and sewage calculations, and coordinated pipe routing. Colours indicate the system type; the model is simplified for web display.</figcaption>
-    </figure>
-<script>
-(function(){
-  var stage=document.getElementById('bimStage'),mv=document.getElementById('bimMV'),load=document.getElementById('bimLoad'),bar=document.getElementById('bimBar');
-  if(!stage||!mv)return;
-  var ORBIT='-30deg 72deg auto',started=false;
-  function start(){
-    if(started)return;started=true;
-    var s=document.createElement('script');s.type='module';
-    s.src='https://cdn.jsdelivr.net/npm/@google/model-viewer@4.3.1/dist/model-viewer.min.js';
-    document.head.appendChild(s);
-    customElements.whenDefined('model-viewer').then(function(){
-      customElements.get('model-viewer').dracoDecoderLocation='https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/libs/draco/gltf/';
-      mv.src=mv.dataset.src;
-    });
-  }
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){start();io.disconnect();}},{rootMargin:'300px'});io.observe(stage);
-  } else start();
-  mv.addEventListener('progress',function(e){bar.style.width=Math.round(e.detail.totalProgress*100)+'%';});
-  mv.addEventListener('load',function(){load.hidden=true;stage.style.backgroundImage='none';});
-  mv.addEventListener('error',function(){load.querySelector('span').textContent='The 3D model could not be loaded.';});
-  mv.addEventListener('camera-change',function(e){if(e.detail&&e.detail.source==='user-interaction')mv.autoRotate=false;});
-  document.getElementById('bimReset').addEventListener('click',function(){
-    mv.cameraTarget='auto';mv.cameraOrbit=ORBIT;mv.fieldOfView='24deg';
-  });
-  var fb=document.getElementById('bimFull');
-  fb.addEventListener('click',function(){
-    if(document.fullscreenElement){document.exitFullscreen();}
-    else if(stage.requestFullscreen){stage.requestFullscreen();}
-    else if(stage.webkitRequestFullscreen){stage.webkitRequestFullscreen();}
-  });
-  document.addEventListener('fullscreenchange',function(){fb.textContent=document.fullscreenElement?'Exit fullscreen':'Fullscreen';});
-})();
+      <div class="case-grid">
+        <section class="case-sec" aria-labelledby="case-hvac">
+          <h4 id="case-hvac">HVAC design</h4>
+          <dl class="case-list">
+            <dt>Ventilation</dt><dd>Ventilation balance, airflow and restriction-ring calculations; duct sizing and routing; valve placement.</dd>
+            <dt>Heating</dt><dd>Heat-loss calculations to determine the required heat-pump capacity, followed by the principal scheme and selection of the ventilation unit on the calculated demand.</dd>
+            <dt>Technical room</dt><dd>Layout planned for distribution boxes, equipment, routing and installation access within the available space.</dd>
+            <dt>Acoustics</dt><dd>Acoustic performance was considered in the system design, with attention to applicable NEN/ISO requirements and the intended noise limits.</dd>
+          </dl>
+        </section>
+        <section class="case-sec" aria-labelledby="case-pl">
+          <h4 id="case-pl">Plumbing design</h4>
+          <dl class="case-list">
+            <dt>Water supply</dt><dd>Water-flow calculations and domestic water distribution.</dd>
+            <dt>Drainage</dt><dd>Sewage capacity calculations and drainage routing.</dd>
+            <dt>Coordination</dt><dd>Pipe routes fitted within the available architectural and technical space, with installation access and the building layout considered throughout.</dd>
+          </dl>
+        </section>
+        <section class="case-sec" aria-labelledby="case-pvt">
+          <h4 id="case-pvt">PVT solar integration</h4>
+          <p>The building also incorporates a PVT solar panel system, which required the associated piping network to be engineered and coordinated with the overall installation. Bronze piping was used for this part of the system.</p>
+        </section>
+        <section class="case-sec" aria-labelledby="case-bim">
+          <h4 id="case-bim">BIM &amp; coordination</h4>
+          <p>All systems were developed in a BIM workflow and coordinated against the architectural model, so the model reflects real space, routing and installation requirements, not calculation output alone. The coordinated model was delivered as IFC.</p>
+        </section>
+      </div>
+
+      <h4 class="bv-h">Interactive BIM model</h4>
+      <div class="bv" id="bv" data-nav="open">
+        <div class="bv-bar" role="toolbar" aria-label="Model viewer controls">
+          <button type="button" class="bv-b" id="bvNav" aria-expanded="true" aria-controls="bvTree"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h13"/></svg>Model navigator</button>
+          <span class="bv-sp"></span>
+          <button type="button" class="bv-b" id="bvFit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Fit view</button>
+          <button type="button" class="bv-b" id="bvReset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"/></svg>Reset view</button>
+          <button type="button" class="bv-b" id="bvFull"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg><span>Fullscreen</span></button>
+        </div>
+        <div class="bv-body">
+          <aside class="bv-nav" id="bvTree" aria-label="Model navigator">
+            <div class="bv-nh">Levels</div>
+            <div class="bv-lv" id="bvLevels"></div>
+            <div class="bv-nh">Model structure</div>
+            <div class="bv-tree" id="bvTreeList" role="tree" aria-label="Model structure"></div>
+          </aside>
+          <div class="bv-stage" id="bvStage">
+            <div class="bv-load" id="bvLoad" aria-live="polite"><span>Loading 3D model</span><b><i id="bvBar"></i></b></div>
+          </div>
+        </div>
+        <div class="bv-status">
+          <span class="bv-sel" id="bvSel">Click an element in the model or a group in the navigator.</span>
+          <span class="bv-acts">
+            <button type="button" class="bv-b" id="bvIso" hidden>Isolate</button>
+            <button type="button" class="bv-b" id="bvHide" hidden>Hide</button>
+            <button type="button" class="bv-b" id="bvClr" hidden>Clear</button>
+            <button type="button" class="bv-b" id="bvShow" hidden>Show all</button>
+          </span>
+        </div>
+      </div>
+      <p class="bv-hint">Drag to rotate · scroll or pinch to zoom · right-drag or two fingers to pan · click to select. IFC geometry simplified for web display.</p>
+    </article>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.183.2/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/"}}</script>
+<script type="module">
+const root=document.getElementById('bv'); if(root){
+const $=id=>document.getElementById(id);
+const stage=$('bvStage'), navBtn=$('bvNav');
+const LABEL={vent_supply:'Ventilation supply',vent_exhaust:'Ventilation exhaust',heat_flow:'Heating flow',heat_return:'Heating return',terminals:'Terminals & equipment',cold_water:'Cold water',hot_water:'Hot water',drainage:'Drainage',other_piping:'Other piping systems',unassigned:'Unassigned fittings & valves',supports:'Supports & accessories',insulation:'Pipe insulation',arch:'Wall'};
+const COL={vent_supply:'#3ba55c',vent_exhaust:'#a8a7a2',heat_flow:'#c4262e',heat_return:'#0c7dbb',hot_water:'#e9711c',cold_water:'#1f2d7b',drainage:'#6b6b6b',other_piping:'#8f96a3',terminals:'#dfe2e6',insulation:'#4a4f57',arch:'#cfd5dc',supports:'#c3c7cd',unassigned:'#b4bac2'};
+const TREE=[{t:'HVAC',c:['vent_supply','vent_exhaust','heat_flow','heat_return','terminals']},{t:'Plumbing',c:['cold_water','hot_water','drainage']},{t:'Other systems',c:['other_piping','unassigned','supports','insulation']},{t:'Architectural reference',c:['arch']}];
+const CLS={IfcFlowSegment:'Segment',IfcFlowFitting:'Fitting',IfcFlowController:'Valve / controller',IfcFlowTerminal:'Terminal',IfcEnergyConversionDevice:'Equipment',IfcBuildingElementProxy:'Accessory',IfcCovering:'Insulation',IfcWallStandardCase:'Wall'};
+/* layout: navigator closed by default on small screens */
+const small=matchMedia('(max-width:700px)');
+function setNav(open){root.dataset.nav=open?'open':'closed';navBtn.setAttribute('aria-expanded',String(open));}
+setNav(!small.matches); navBtn.addEventListener('click',()=>setNav(root.dataset.nav!=='open'));
+$('bvFull').addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen();else (root.requestFullscreen||root.webkitRequestFullscreen||(()=>{})).call(root);});
+document.addEventListener('fullscreenchange',()=>{$('bvFull').querySelector('span').textContent=document.fullscreenElement===root?'Exit fullscreen':'Fullscreen';});
+let started=false;
+const io=new IntersectionObserver(es=>{if(es[0].isIntersecting&&!started){started=true;io.disconnect();init().catch(e=>{$('bvLoad').querySelector('span').textContent='The 3D model could not be loaded.';console.error(e);});}},{rootMargin:'300px'});
+io.observe(root.closest('.case')||root);
+async function init(){
+  const THREE=await import('three');
+  const {GLTFLoader}=await import('three/addons/loaders/GLTFLoader.js');
+  const {DRACOLoader}=await import('three/addons/loaders/DRACOLoader.js');
+  const {OrbitControls}=await import('three/addons/controls/OrbitControls.js');
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(0x000000,0);
+  renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.toneMapping=THREE.NeutralToneMapping;
+  stage.prepend(renderer.domElement);
+  const scene=new THREE.Scene();
+  scene.add(new THREE.HemisphereLight(0xffffff,0x9aa3ad,2.2));
+  const sun=new THREE.DirectionalLight(0xffffff,1.6); sun.position.set(-6,10,8); scene.add(sun);
+  const camera=new THREE.PerspectiveCamera(30,1,0.05,500);
+  const controls=new OrbitControls(camera,renderer.domElement);
+  controls.enableDamping=true; controls.dampingFactor=0.08; controls.autoRotate=true; controls.autoRotateSpeed=0.6;
+  controls.addEventListener('start',()=>{controls.autoRotate=false;});
+  const draco=new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/libs/draco/gltf/');
+  const loader=new GLTFLoader(); loader.setDRACOLoader(draco);
+  const gltf=await new Promise((res,rej)=>loader.load('model.glb',res,e=>{if(e.total)$('bvBar').style.width=Math.round(e.loaded/e.total*100)+'%';},rej));
+  const meta=gltf.scene.userData.meta||gltf.userData?.meta||[];
+  const mats={}; for(const g in COL) mats[g]=new THREE.MeshStandardMaterial({color:COL[g],roughness:0.7,metalness:0,side:THREE.DoubleSide});
+  mats.arch.transparent=true; mats.arch.opacity=0.35; mats.arch.depthWrite=false;
+  const selMat=new THREE.MeshStandardMaterial({color:'#ffcf33',emissive:'#7a5a00',emissiveIntensity:0.5,roughness:0.5,side:THREE.DoubleSide});
+  const meshes=[];
+  gltf.scene.traverse(o=>{if(o.isMesh){let n=o; while(n&&!/^e\d+$/.test(n.name))n=n.parent; const i=n?+n.name.slice(1):-1; const m=meta[i]||['unassigned','','','']; o.userData={i,g:m[0],cls:m[1],type:m[2],lv:m[3]}; o.material=mats[m[0]]||mats.unassigned; meshes.push(o);}});
+  scene.add(gltf.scene);
+  const levels=[...new Set(meshes.map(m=>m.userData.lv))].filter(Boolean).sort();
+  const gVis={}, lVis={}; Object.keys(LABEL).forEach(g=>gVis[g]=true); levels.forEach(l=>lVis[l]=true);
+  const hidden=new Set(); let iso=null; let sel=new Set(); let selLabel='';
+  const count={}; meshes.forEach(m=>count[m.userData.g]=(count[m.userData.g]||0)+1);
+  function applyVis(){meshes.forEach(m=>{const u=m.userData; m.visible=gVis[u.g]!==false&&(!u.lv||lVis[u.lv]!==false)&&!hidden.has(m)&&(!iso||iso.has(m));});
+    const anyHidden=hidden.size||iso||Object.values(gVis).includes(false)||Object.values(lVis).includes(false); $('bvShow').hidden=!anyHidden; syncTree(); need=true;}
+  function setSel(set,label){sel.forEach(m=>m.material=mats[m.userData.g]||mats.unassigned); sel=set; selLabel=label; sel.forEach(m=>m.material=selMat);
+    $('bvSel').textContent=sel.size?label:'Click an element in the model or a group in the navigator.'; ['bvIso','bvHide','bvClr'].forEach(id=>$(id).hidden=!sel.size);
+    root.querySelectorAll('.bv-row[data-g]').forEach(r=>r.classList.toggle('on',sel.size>0&&selLabel===groupLabel(r.dataset.g))); need=true;}
+  const groupLabel=g=>LABEL[g]+' — '+count[g]+' element'+(count[g]>1?'s':'');
+  /* navigator */
+  const eye='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  const caret='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+  const list=$('bvTreeList'); let html=`<div class="bv-row bv-root" role="treeitem" aria-expanded="true"><span class="bv-c"></span><button class="bv-eye" data-all aria-label="Show or hide all" aria-pressed="true">${eye}</button><span class="bv-lbl">Building</span><span class="bv-n">${meshes.length}</span></div>`;
+  TREE.forEach((d,k)=>{const cs=d.c.filter(g=>count[g]); if(!cs.length)return; const n=cs.reduce((a,g)=>a+count[g],0);
+    html+=`<div class="bv-grp" role="group"><div class="bv-row bv-d" role="treeitem" aria-expanded="true"><button class="bv-c" data-tog="${k}" aria-label="Expand or collapse ${d.t}">${caret}</button><button class="bv-eye" data-d="${k}" aria-label="Show or hide ${d.t}" aria-pressed="true">${eye}</button><span class="bv-lbl">${d.t}</span><span class="bv-n">${n}</span></div><div class="bv-kids" data-k="${k}">`;
+    cs.forEach(g=>{html+=`<div class="bv-row" role="treeitem" data-g="${g}" tabindex="0"><span class="bv-c"></span><button class="bv-eye" data-eg="${g}" aria-label="Show or hide ${LABEL[g]}" aria-pressed="true">${eye}</button><i class="bv-sw" style="background:${COL[g]}"></i><span class="bv-lbl">${LABEL[g]}</span><span class="bv-n">${count[g]}</span></div>`;});
+    html+='</div></div>';});
+  list.innerHTML=html;
+  $('bvLevels').innerHTML=levels.map(l=>`<button type="button" class="bv-chip" data-l="${l}" aria-pressed="true">${l}</button>`).join('');
+  function syncTree(){list.querySelectorAll('[data-eg]').forEach(b=>b.setAttribute('aria-pressed',String(gVis[b.dataset.eg])));
+    list.querySelectorAll('[data-d]').forEach(b=>{const cs=TREE[b.dataset.d].c.filter(g=>count[g]);b.setAttribute('aria-pressed',String(cs.some(g=>gVis[g])));});
+    list.querySelector('[data-all]').setAttribute('aria-pressed',String(Object.keys(count).some(g=>gVis[g])));
+    root.querySelectorAll('[data-l]').forEach(b=>b.setAttribute('aria-pressed',String(lVis[b.dataset.l])));}
+  list.addEventListener('click',e=>{const b=e.target.closest('button');
+    if(b&&b.dataset.tog!==undefined){const kids=list.querySelector(`.bv-kids[data-k="${b.dataset.tog}"]`);const row=b.closest('.bv-row');const open=row.getAttribute('aria-expanded')!=='false';row.setAttribute('aria-expanded',String(!open));kids.hidden=open;return;}
+    if(b&&b.dataset.eg){gVis[b.dataset.eg]=!gVis[b.dataset.eg];applyVis();return;}
+    if(b&&b.dataset.d!==undefined){const cs=TREE[b.dataset.d].c.filter(g=>count[g]);const on=!cs.some(g=>gVis[g]);cs.forEach(g=>gVis[g]=on);applyVis();return;}
+    if(b&&b.dataset.all!==undefined){const on=!Object.keys(count).some(g=>gVis[g]);Object.keys(count).forEach(g=>gVis[g]=on);applyVis();return;}
+    const r=e.target.closest('.bv-row[data-g]'); if(r) selectGroup(r.dataset.g);});
+  list.addEventListener('keydown',e=>{const r=e.target.closest('.bv-row[data-g]');if(r&&(e.key==='Enter'||e.key===' ')){e.preventDefault();selectGroup(r.dataset.g);}});
+  function selectGroup(g){const set=new Set(meshes.filter(m=>m.userData.g===g));if(selLabel===groupLabel(g)&&sel.size){setSel(new Set(),'');return;}setSel(set,groupLabel(g));if(small.matches)setNav(false);}
+  $('bvLevels').addEventListener('click',e=>{const b=e.target.closest('[data-l]');if(!b)return;lVis[b.dataset.l]=!lVis[b.dataset.l];applyVis();});
+  $('bvIso').addEventListener('click',()=>{iso=new Set(sel);hidden.clear();applyVis();fit([...sel]);});
+  $('bvHide').addEventListener('click',()=>{sel.forEach(m=>hidden.add(m));setSel(new Set(),'');applyVis();});
+  $('bvClr').addEventListener('click',()=>setSel(new Set(),''));
+  $('bvShow').addEventListener('click',showAll);
+  function showAll(){hidden.clear();iso=null;Object.keys(gVis).forEach(g=>gVis[g]=true);Object.keys(lVis).forEach(l=>lVis[l]=true);applyVis();}
+  /* camera */
+  const DIR=new THREE.Vector3().setFromSphericalCoords(1,THREE.MathUtils.degToRad(68),THREE.MathUtils.degToRad(-35));
+  function fit(objs,dir){const list=(objs&&objs.length?objs:meshes).filter(m=>m.visible);if(!list.length)return;const box=new THREE.Box3();list.forEach(m=>box.expandByObject(m));
+    const sph=box.getBoundingSphere(new THREE.Sphere());const d=dir||camera.position.clone().sub(controls.target).normalize();
+    const fov=THREE.MathUtils.degToRad(camera.fov);const dist=sph.radius/Math.sin(Math.min(fov,2*Math.atan(Math.tan(fov/2)*camera.aspect))/2)*1.0;
+    controls.target.copy(sph.center);camera.position.copy(sph.center).addScaledVector(d,dist);camera.near=dist/100;camera.far=dist*10;camera.updateProjectionMatrix();controls.update();need=true;}
+  $('bvFit').addEventListener('click',()=>fit(sel.size?[...sel]:null));
+  $('bvReset').addEventListener('click',()=>{showAll();setSel(new Set(),'');fit(null,DIR);});
+  /* picking */
+  const ray=new THREE.Raycaster();let down=null;
+  renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
+  renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const r=renderer.domElement.getBoundingClientRect();
+    ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);
+    const hit=ray.intersectObjects(meshes.filter(m=>m.visible),false)[0];
+    if(!hit){setSel(new Set(),'');return;}const u=hit.object.userData;
+    setSel(new Set([hit.object]),`${CLS[u.cls]||u.cls} · ${u.type||'—'} — ${LABEL[u.g]}${u.lv?' · '+u.lv:''} (${u.cls})`);});
+  /* size + render */
+  let need=true,onScreen=true;
+  function size(){const w=stage.clientWidth,h=stage.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();need=true;}
+  new ResizeObserver(size).observe(stage); size();
+  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;},{}).observe(root);
+  controls.addEventListener('change',()=>need=true);
+  fit(null,DIR); applyVis(); $('bvLoad').hidden=true; root.classList.add('ready');
+  (function loop(){requestAnimationFrame(loop);if(!onScreen)return;const moved=controls.update();if(need||moved||controls.autoRotate){renderer.render(scene,camera);need=false;}})();
+}}
 </script>
 
 
