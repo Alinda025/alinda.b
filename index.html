@@ -539,52 +539,19 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
 .bv-b:hover{border-color:var(--link);color:var(--link)}
 .bv-b svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bv-b[hidden]{display:none}
-#bvNav[aria-expanded="true"]{background:var(--strip);border-color:var(--link);color:var(--link)}
-.bv-body{position:relative;display:grid;grid-template-columns:260px minmax(0,1fr);height:clamp(380px,58vw,620px)}
-.bv[data-nav="closed"] .bv-body{grid-template-columns:0 minmax(0,1fr)}
-.bv[data-nav="closed"] .bv-nav{visibility:hidden}
-.bv-nav{overflow:auto;border-right:1px solid var(--bv-line);background:var(--bg);font-size:14px;padding:6px 0 10px}
-.bv-nh{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:8px 12px 4px}
-.bv-row{display:flex;align-items:center;gap:4px;padding:2px 10px 2px 6px;min-height:28px;cursor:default;border-left:2px solid transparent}
-.bv-row[data-g]{cursor:pointer;padding-left:24px}
-.bv-row[data-g]:hover{background:var(--panel)}
-.bv-row.on{background:var(--strip);border-left-color:var(--link)}
-.bv-row:focus-visible{outline:2px solid var(--link);outline-offset:-2px}
-.bv-d{font-weight:600;border-top:1px solid var(--rule);margin-top:2px}
-.bv-root{font-weight:600}
-.bv-c{width:18px;height:18px;flex:none;display:grid;place-items:center;background:none;border:0;padding:0;color:var(--muted);cursor:pointer}
-.bv-c svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;transition:transform .15s}
-.bv-row[aria-expanded="true"] .bv-c svg{transform:rotate(90deg)}
-.bv-kids[hidden]{display:none}
-.bv-eye{width:22px;height:22px;flex:none;display:grid;place-items:center;background:none;border:0;padding:0;color:var(--fg);cursor:pointer;border-radius:2px}
-.bv-eye:hover{background:var(--panel)}
-.bv-eye svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8}
-.bv-eye[aria-pressed="false"]{color:var(--faint);opacity:.45}
-.bv-sw{width:10px;height:10px;border-radius:2px;flex:none;margin:0 4px 0 2px;border:1px solid rgba(0,0,0,.15)}
-.bv-lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bv-n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.bv-lv{display:flex;flex-wrap:wrap;gap:6px;padding:4px 12px}
-.bv-chip{font:inherit;font-size:13px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:2px;padding:1px 10px;cursor:pointer}
-.bv-chip[aria-pressed="true"]{border-color:var(--link);color:var(--link);background:var(--strip)}
-.bv-stage{position:relative;background:var(--bv-bg);min-width:0;overflow:hidden}
+.bv-stage{position:relative;background:var(--bv-bg);height:clamp(380px,52vw,600px);overflow:hidden;border-bottom:1px solid var(--bv-line)}
 .bv-stage canvas{display:block;width:100%;height:100%;touch-action:none}
 .bv-load{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-size:14px;color:var(--muted);background:var(--bv-bg) url(model-poster.webp) center/contain no-repeat}
 .bv-load[hidden]{display:none}
 .bv-load span{background:var(--bv-bg);padding:2px 8px}
 .bv-load b{display:block;width:140px;height:3px;background:var(--rule)}
 .bv-load i{display:block;height:100%;width:0;background:var(--link);transition:width .2s}
-.bv-status{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;padding:6px 10px;border-top:1px solid var(--bv-line);font-size:14px;min-height:40px}
-.bv-sel{flex:1;min-width:0;color:var(--muted);overflow-wrap:anywhere}
-.bv-acts{display:flex;gap:6px;flex-wrap:wrap}
+.bv-leg{list-style:none;margin:0;padding:10px 12px;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:14px}
+.bv-leg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.15)}
 .bv-hint{font-size:14px;color:var(--muted);margin:8px 0 0}
 .bv:fullscreen{width:100vw;height:100vh;border:0}
-.bv:fullscreen .bv-body{height:auto;flex:1}
-@media (max-width:1000px){.bv-body{grid-template-columns:220px minmax(0,1fr)}}
-@media (max-width:700px){
-  .bv-body,.bv[data-nav="closed"] .bv-body{grid-template-columns:minmax(0,1fr);height:clamp(380px,110vw,560px)}
-  .bv-nav{position:absolute;left:0;top:0;bottom:0;width:min(82%,280px);z-index:3;border-right:1px solid var(--bv-line)}
-  .bv-b{padding:3px 8px}
-}
+.bv:fullscreen .bv-stage{height:auto;flex:1}
+@media (max-width:700px){.bv-stage{height:clamp(360px,110vw,520px)}.bv-leg{gap:2px 14px;font-size:13px}}
 </style>
 </head><body>
 <header class="wrap util">
@@ -684,7 +651,7 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
     <article class="case" id="bim-model" aria-labelledby="case-t">
       <div class="label">Project case study · Single-family residential building</div>
       <h3 class="case-t" id="case-t">Complete HVAC &amp; Plumbing Design for a Single-Family Residential Building</h3>
-      <p class="case-lead">Alinda Bhattacharjee developed the complete HVAC and plumbing design for a single-family house from the architectural information supplied for the project. The work covered the engineering calculations, system layout and spatial coordination required to turn that input into an installable design, delivered as a coordinated BIM model and IFC file.</p>
+      <p class="case-lead">Complete HVAC and plumbing design and development for a single-family house, carried out by Alinda Bhattacharjee from the architectural information supplied for the project. The work covered the engineering calculations, system layout and spatial coordination required to turn that input into an installable design, delivered as a coordinated BIM model and IFC file.</p>
       <dl class="case-meta">
         <div><dt>Project inputs</dt><dd>Building Decree report · architectural drawings · architectural IFC model</dd></div>
         <div><dt>Disciplines</dt><dd>Ventilation · heating · domestic water · drainage · PVT piping</dd></div>
@@ -724,50 +691,26 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
       </div>
 
       <h4 class="bv-h">Interactive BIM model</h4>
-      <div class="bv" id="bv" data-nav="open">
+      <div class="bv" id="bv">
         <div class="bv-bar" role="toolbar" aria-label="Model viewer controls">
-          <button type="button" class="bv-b" id="bvNav" aria-expanded="true" aria-controls="bvTree"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h13"/></svg>Model navigator</button>
           <span class="bv-sp"></span>
           <button type="button" class="bv-b" id="bvFit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Fit view</button>
           <button type="button" class="bv-b" id="bvReset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"/></svg>Reset view</button>
           <button type="button" class="bv-b" id="bvFull"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg><span>Fullscreen</span></button>
         </div>
-        <div class="bv-body">
-          <aside class="bv-nav" id="bvTree" aria-label="Model navigator">
-            <div class="bv-nh">Levels</div>
-            <div class="bv-lv" id="bvLevels"></div>
-            <div class="bv-nh">Model structure</div>
-            <div class="bv-tree" id="bvTreeList" role="tree" aria-label="Model structure"></div>
-          </aside>
-          <div class="bv-stage" id="bvStage">
-            <div class="bv-load" id="bvLoad" aria-live="polite"><span>Loading 3D model</span><b><i id="bvBar"></i></b></div>
-          </div>
+        <div class="bv-stage" id="bvStage">
+          <div class="bv-load" id="bvLoad" aria-live="polite"><span>Loading 3D model</span><b><i id="bvBar"></i></b></div>
         </div>
-        <div class="bv-status">
-          <span class="bv-sel" id="bvSel">Click an element in the model or a group in the navigator.</span>
-          <span class="bv-acts">
-            <button type="button" class="bv-b" id="bvIso" hidden>Isolate</button>
-            <button type="button" class="bv-b" id="bvHide" hidden>Hide</button>
-            <button type="button" class="bv-b" id="bvClr" hidden>Clear</button>
-            <button type="button" class="bv-b" id="bvShow" hidden>Show all</button>
-          </span>
-        </div>
+        <ul class="bv-leg" aria-label="System colours"><li><i style="background:#c4262e"></i>Heating flow</li><li><i style="background:#0c7dbb"></i>Heating return</li><li><i style="background:#3ba55c"></i>Ventilation supply</li><li><i style="background:#a8a7a2"></i>Ventilation exhaust</li><li><i style="background:#1f2d7b"></i>Cold water</li><li><i style="background:#e9711c"></i>Hot water</li><li><i style="background:#6b6b6b"></i>Drainage</li><li><i style="background:#c3c7cd"></i>Equipment, fittings &amp; supports</li></ul>
       </div>
-      <p class="bv-hint">Drag to rotate · scroll or pinch to zoom · right-drag or two fingers to pan · click to select. IFC geometry simplified for web display.</p>
+      <p class="bv-hint">Drag to rotate · scroll or pinch to zoom · right-drag or two fingers to pan. IFC geometry simplified for web display.</p>
     </article>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.183.2/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/"}}</script>
 <script type="module">
 const root=document.getElementById('bv'); if(root){
-const $=id=>document.getElementById(id);
-const stage=$('bvStage'), navBtn=$('bvNav');
-const LABEL={vent_supply:'Ventilation supply',vent_exhaust:'Ventilation exhaust',heat_flow:'Heating flow',heat_return:'Heating return',terminals:'Terminals & equipment',cold_water:'Cold water',hot_water:'Hot water',drainage:'Drainage',other_piping:'Other piping systems',unassigned:'Unassigned fittings & valves',supports:'Supports & accessories',insulation:'Pipe insulation',arch:'Wall'};
-const COL={vent_supply:'#3ba55c',vent_exhaust:'#a8a7a2',heat_flow:'#c4262e',heat_return:'#0c7dbb',hot_water:'#e9711c',cold_water:'#1f2d7b',drainage:'#6b6b6b',other_piping:'#8f96a3',terminals:'#dfe2e6',insulation:'#4a4f57',arch:'#cfd5dc',supports:'#c3c7cd',unassigned:'#b4bac2'};
-const TREE=[{t:'HVAC',c:['vent_supply','vent_exhaust','heat_flow','heat_return','terminals']},{t:'Plumbing',c:['cold_water','hot_water','drainage']},{t:'Other systems',c:['other_piping','unassigned','supports','insulation']},{t:'Architectural reference',c:['arch']}];
-const CLS={IfcFlowSegment:'Segment',IfcFlowFitting:'Fitting',IfcFlowController:'Valve / controller',IfcFlowTerminal:'Terminal',IfcEnergyConversionDevice:'Equipment',IfcBuildingElementProxy:'Accessory',IfcCovering:'Insulation',IfcWallStandardCase:'Wall'};
-/* layout: navigator closed by default on small screens */
-const small=matchMedia('(max-width:700px)');
-function setNav(open){root.dataset.nav=open?'open':'closed';navBtn.setAttribute('aria-expanded',String(open));}
-setNav(!small.matches); navBtn.addEventListener('click',()=>setNav(root.dataset.nav!=='open'));
+const $=id=>document.getElementById(id); const stage=$('bvStage');
+const COL={vent_supply:'#3ba55c',vent_exhaust:'#a8a7a2',heat_flow:'#c4262e',heat_return:'#0c7dbb',hot_water:'#e9711c',cold_water:'#1f2d7b',drainage:'#6b6b6b',arch:'#cfd5dc'};
+const GREY='#c3c7cd';
 $('bvFull').addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen();else (root.requestFullscreen||root.webkitRequestFullscreen||(()=>{})).call(root);});
 document.addEventListener('fullscreenchange',()=>{$('bvFull').querySelector('span').textContent=document.fullscreenElement===root?'Exit fullscreen':'Fullscreen';});
 let started=false;
@@ -792,74 +735,24 @@ async function init(){
   const draco=new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/libs/draco/gltf/');
   const loader=new GLTFLoader(); loader.setDRACOLoader(draco);
   const gltf=await new Promise((res,rej)=>loader.load('model.glb',res,e=>{if(e.total)$('bvBar').style.width=Math.round(e.loaded/e.total*100)+'%';},rej));
-  const meta=gltf.scene.userData.meta||gltf.userData?.meta||[];
-  const mats={}; for(const g in COL) mats[g]=new THREE.MeshStandardMaterial({color:COL[g],roughness:0.7,metalness:0,side:THREE.DoubleSide});
-  mats.arch.transparent=true; mats.arch.opacity=0.35; mats.arch.depthWrite=false;
-  const selMat=new THREE.MeshStandardMaterial({color:'#ffcf33',emissive:'#7a5a00',emissiveIntensity:0.5,roughness:0.5,side:THREE.DoubleSide});
+  const meta=gltf.scene.userData.meta||[];
+  const mats={};const mat=g=>mats[g]||(mats[g]=new THREE.MeshStandardMaterial({color:COL[g]||GREY,roughness:0.7,metalness:0,side:THREE.DoubleSide,transparent:g==='arch',opacity:g==='arch'?0.35:1,depthWrite:g!=='arch'}));
   const meshes=[];
-  gltf.scene.traverse(o=>{if(o.isMesh){let n=o; while(n&&!/^e\d+$/.test(n.name))n=n.parent; const i=n?+n.name.slice(1):-1; const m=meta[i]||['unassigned','','','']; o.userData={i,g:m[0],cls:m[1],type:m[2],lv:m[3]}; o.material=mats[m[0]]||mats.unassigned; meshes.push(o);}});
+  gltf.scene.traverse(o=>{if(o.isMesh){let n=o;while(n&&!/^e\d+$/.test(n.name))n=n.parent;const m=meta[n?+n.name.slice(1):-1];o.material=mat(m?m[0]:'other');meshes.push(o);}});
   scene.add(gltf.scene);
-  const levels=[...new Set(meshes.map(m=>m.userData.lv))].filter(Boolean).sort();
-  const gVis={}, lVis={}; Object.keys(LABEL).forEach(g=>gVis[g]=true); levels.forEach(l=>lVis[l]=true);
-  const hidden=new Set(); let iso=null; let sel=new Set(); let selLabel='';
-  const count={}; meshes.forEach(m=>count[m.userData.g]=(count[m.userData.g]||0)+1);
-  function applyVis(){meshes.forEach(m=>{const u=m.userData; m.visible=gVis[u.g]!==false&&(!u.lv||lVis[u.lv]!==false)&&!hidden.has(m)&&(!iso||iso.has(m));});
-    const anyHidden=hidden.size||iso||Object.values(gVis).includes(false)||Object.values(lVis).includes(false); $('bvShow').hidden=!anyHidden; syncTree(); need=true;}
-  function setSel(set,label){sel.forEach(m=>m.material=mats[m.userData.g]||mats.unassigned); sel=set; selLabel=label; sel.forEach(m=>m.material=selMat);
-    $('bvSel').textContent=sel.size?label:'Click an element in the model or a group in the navigator.'; ['bvIso','bvHide','bvClr'].forEach(id=>$(id).hidden=!sel.size);
-    root.querySelectorAll('.bv-row[data-g]').forEach(r=>r.classList.toggle('on',sel.size>0&&selLabel===groupLabel(r.dataset.g))); need=true;}
-  const groupLabel=g=>LABEL[g]+' — '+count[g]+' element'+(count[g]>1?'s':'');
-  /* navigator */
-  const eye='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
-  const caret='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
-  const list=$('bvTreeList'); let html=`<div class="bv-row bv-root" role="treeitem" aria-expanded="true"><span class="bv-c"></span><button class="bv-eye" data-all aria-label="Show or hide all" aria-pressed="true">${eye}</button><span class="bv-lbl">Building</span><span class="bv-n">${meshes.length}</span></div>`;
-  TREE.forEach((d,k)=>{const cs=d.c.filter(g=>count[g]); if(!cs.length)return; const n=cs.reduce((a,g)=>a+count[g],0);
-    html+=`<div class="bv-grp" role="group"><div class="bv-row bv-d" role="treeitem" aria-expanded="true"><button class="bv-c" data-tog="${k}" aria-label="Expand or collapse ${d.t}">${caret}</button><button class="bv-eye" data-d="${k}" aria-label="Show or hide ${d.t}" aria-pressed="true">${eye}</button><span class="bv-lbl">${d.t}</span><span class="bv-n">${n}</span></div><div class="bv-kids" data-k="${k}">`;
-    cs.forEach(g=>{html+=`<div class="bv-row" role="treeitem" data-g="${g}" tabindex="0"><span class="bv-c"></span><button class="bv-eye" data-eg="${g}" aria-label="Show or hide ${LABEL[g]}" aria-pressed="true">${eye}</button><i class="bv-sw" style="background:${COL[g]}"></i><span class="bv-lbl">${LABEL[g]}</span><span class="bv-n">${count[g]}</span></div>`;});
-    html+='</div></div>';});
-  list.innerHTML=html;
-  $('bvLevels').innerHTML=levels.map(l=>`<button type="button" class="bv-chip" data-l="${l}" aria-pressed="true">${l}</button>`).join('');
-  function syncTree(){list.querySelectorAll('[data-eg]').forEach(b=>b.setAttribute('aria-pressed',String(gVis[b.dataset.eg])));
-    list.querySelectorAll('[data-d]').forEach(b=>{const cs=TREE[b.dataset.d].c.filter(g=>count[g]);b.setAttribute('aria-pressed',String(cs.some(g=>gVis[g])));});
-    list.querySelector('[data-all]').setAttribute('aria-pressed',String(Object.keys(count).some(g=>gVis[g])));
-    root.querySelectorAll('[data-l]').forEach(b=>b.setAttribute('aria-pressed',String(lVis[b.dataset.l])));}
-  list.addEventListener('click',e=>{const b=e.target.closest('button');
-    if(b&&b.dataset.tog!==undefined){const kids=list.querySelector(`.bv-kids[data-k="${b.dataset.tog}"]`);const row=b.closest('.bv-row');const open=row.getAttribute('aria-expanded')!=='false';row.setAttribute('aria-expanded',String(!open));kids.hidden=open;return;}
-    if(b&&b.dataset.eg){gVis[b.dataset.eg]=!gVis[b.dataset.eg];applyVis();return;}
-    if(b&&b.dataset.d!==undefined){const cs=TREE[b.dataset.d].c.filter(g=>count[g]);const on=!cs.some(g=>gVis[g]);cs.forEach(g=>gVis[g]=on);applyVis();return;}
-    if(b&&b.dataset.all!==undefined){const on=!Object.keys(count).some(g=>gVis[g]);Object.keys(count).forEach(g=>gVis[g]=on);applyVis();return;}
-    const r=e.target.closest('.bv-row[data-g]'); if(r) selectGroup(r.dataset.g);});
-  list.addEventListener('keydown',e=>{const r=e.target.closest('.bv-row[data-g]');if(r&&(e.key==='Enter'||e.key===' ')){e.preventDefault();selectGroup(r.dataset.g);}});
-  function selectGroup(g){const set=new Set(meshes.filter(m=>m.userData.g===g));if(selLabel===groupLabel(g)&&sel.size){setSel(new Set(),'');return;}setSel(set,groupLabel(g));if(small.matches)setNav(false);}
-  $('bvLevels').addEventListener('click',e=>{const b=e.target.closest('[data-l]');if(!b)return;lVis[b.dataset.l]=!lVis[b.dataset.l];applyVis();});
-  $('bvIso').addEventListener('click',()=>{iso=new Set(sel);hidden.clear();applyVis();fit([...sel]);});
-  $('bvHide').addEventListener('click',()=>{sel.forEach(m=>hidden.add(m));setSel(new Set(),'');applyVis();});
-  $('bvClr').addEventListener('click',()=>setSel(new Set(),''));
-  $('bvShow').addEventListener('click',showAll);
-  function showAll(){hidden.clear();iso=null;Object.keys(gVis).forEach(g=>gVis[g]=true);Object.keys(lVis).forEach(l=>lVis[l]=true);applyVis();}
-  /* camera */
   const DIR=new THREE.Vector3().setFromSphericalCoords(1,THREE.MathUtils.degToRad(68),THREE.MathUtils.degToRad(-35));
-  function fit(objs,dir){const list=(objs&&objs.length?objs:meshes).filter(m=>m.visible);if(!list.length)return;const box=new THREE.Box3();list.forEach(m=>box.expandByObject(m));
-    const sph=box.getBoundingSphere(new THREE.Sphere());const d=dir||camera.position.clone().sub(controls.target).normalize();
-    const fov=THREE.MathUtils.degToRad(camera.fov);const dist=sph.radius/Math.sin(Math.min(fov,2*Math.atan(Math.tan(fov/2)*camera.aspect))/2)*1.0;
+  function fit(dir){const box=new THREE.Box3();meshes.forEach(m=>box.expandByObject(m));const sph=box.getBoundingSphere(new THREE.Sphere());
+    const d=dir||camera.position.clone().sub(controls.target).normalize();const fov=THREE.MathUtils.degToRad(camera.fov);
+    const dist=sph.radius/Math.sin(Math.min(fov,2*Math.atan(Math.tan(fov/2)*camera.aspect))/2);
     controls.target.copy(sph.center);camera.position.copy(sph.center).addScaledVector(d,dist);camera.near=dist/100;camera.far=dist*10;camera.updateProjectionMatrix();controls.update();need=true;}
-  $('bvFit').addEventListener('click',()=>fit(sel.size?[...sel]:null));
-  $('bvReset').addEventListener('click',()=>{showAll();setSel(new Set(),'');fit(null,DIR);});
-  /* picking */
-  const ray=new THREE.Raycaster();let down=null;
-  renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
-  renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const r=renderer.domElement.getBoundingClientRect();
-    ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);
-    const hit=ray.intersectObjects(meshes.filter(m=>m.visible),false)[0];
-    if(!hit){setSel(new Set(),'');return;}const u=hit.object.userData;
-    setSel(new Set([hit.object]),`${CLS[u.cls]||u.cls} · ${u.type||'—'} — ${LABEL[u.g]}${u.lv?' · '+u.lv:''} (${u.cls})`);});
-  /* size + render */
+  $('bvFit').addEventListener('click',()=>fit());
+  $('bvReset').addEventListener('click',()=>{fit(DIR);controls.autoRotate=true;});
   let need=true,onScreen=true;
   function size(){const w=stage.clientWidth,h=stage.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();need=true;}
   new ResizeObserver(size).observe(stage); size();
-  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;},{}).observe(root);
+  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;}).observe(root);
   controls.addEventListener('change',()=>need=true);
-  fit(null,DIR); applyVis(); $('bvLoad').hidden=true; root.classList.add('ready');
+  fit(DIR); $('bvLoad').hidden=true; root.classList.add('ready');
   (function loop(){requestAnimationFrame(loop);if(!onScreen)return;const moved=controls.update();if(need||moved||controls.autoRotate){renderer.render(scene,camera);need=false;}})();
 }}
 </script>
