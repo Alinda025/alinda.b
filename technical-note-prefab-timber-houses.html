@@ -1,0 +1,745 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prefabricated modular timber single-family houses: technical basis for HVAC and plumbing installation modelling — Alinda Bhattacharjee</title>
+
+<style>
+/* Layout: publisher-style journal homepage — utility header, navy masthead with overlapping cover, journal nav, info strip, 60/40 body, listing sections, footer */
+:root{
+  --bg:#ffffff; --fg:#2e2e2e; --muted:#505050; --faint:#6b6b6b;
+  --panel:#f4f4f4; --strip:#eaf4fb; --rule:#dcdcdc;
+  --navy:#1f2d7b; --on-navy:#ffffff; --on-navy-dim:rgba(255,255,255,.55);
+  --link:#0c7dbb; --link-strong:#0a6aa0; --brand:#e9711c;
+  --cover-bg:#e7edf3; --cover-ink:#1f2d7b; --cover-dot:rgba(31,45,123,.22);
+  --font:"Times New Roman",Times,"Liberation Serif","Nimbus Roman",serif;
+  --wrap:1600px;
+  --c-a:#2a78d6; --c-req:#a8a7a2;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14161b; --fg:#e4e6ea; --muted:#b4b8c0; --faint:#9298a2;
+    --panel:#1d2027; --strip:#16263a; --rule:#33373f;
+    --navy:#1b2766; --on-navy:#ffffff; --on-navy-dim:rgba(255,255,255,.5);
+    --link:#5cb6ec; --link-strong:#86caf2; --brand:#f08a3c;
+    --cover-bg:#252b3a; --cover-ink:#dfe5ff; --cover-dot:rgba(223,229,255,.2);
+    --c-a:#3987e5; --c-req:#6f6e69;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14161b; --fg:#e4e6ea; --muted:#b4b8c0; --faint:#9298a2;
+  --panel:#1d2027; --strip:#16263a; --rule:#33373f;
+  --navy:#1b2766; --on-navy:#ffffff; --on-navy-dim:rgba(255,255,255,.5);
+  --link:#5cb6ec; --link-strong:#86caf2; --brand:#f08a3c;
+  --cover-bg:#252b3a; --cover-ink:#dfe5ff; --cover-dot:rgba(223,229,255,.2);
+  --c-a:#3987e5; --c-req:#6f6e69;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.75;margin:0}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+h1,h2,h3{font-weight:400;text-wrap:balance;margin:0;line-height:1.25}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,6vw,150px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Utility header */
+.util{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:14px}
+.brand{display:flex;align-items:baseline;color:var(--fg);font-size:30px;font-weight:700;line-height:1}
+.brand:hover{text-decoration:none}
+.brand .dot{color:var(--brand)}
+.util nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 34px}
+.util nav a{color:var(--fg);font-size:16px;display:inline-flex;align-items:center;gap:8px}
+.util nav svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6}
+.util-right{display:flex;align-items:center;gap:16px 30px;flex-wrap:wrap}
+.theme-btn{font:inherit;font-size:16px;display:inline-flex;align-items:center;gap:8px;background:none;color:var(--fg);border:1px solid var(--rule);border-radius:2px;padding:4px 12px;cursor:pointer}
+.theme-btn:hover{border-color:var(--link);color:var(--link)}
+.theme-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6}
+.theme-btn .moon{display:inline}.theme-btn .sun{display:none}
+:root[data-theme="dark"] .theme-btn .moon{display:none}:root[data-theme="dark"] .theme-btn .sun{display:inline}
+
+/* Masthead */
+.mast{background:var(--navy);color:var(--on-navy);margin-top:42px}
+.mast .wrap{display:grid;grid-template-columns:188px minmax(0,1fr) auto;gap:16px 52px;align-items:center;min-height:256px}
+.cover{width:188px;aspect-ratio:4/5;max-width:100%;margin-top:-34px;align-self:start}
+.cover img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.mast h1{font-size:clamp(28px,3.2vw,40px);font-weight:400}
+.mast .sub{font-size:17px;font-weight:500;margin-top:10px}
+.mast .tag{font-size:14px;color:var(--on-navy-dim);margin-top:6px}
+.metrics{display:flex;flex-wrap:wrap;row-gap:14px;align-items:stretch}
+.metric{padding:0 32px;display:flex;flex-direction:column;justify-content:center}
+.metric+.metric{border-left:1px solid var(--on-navy-dim)}
+.metric .n{font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
+.metric .l{font-size:15px;font-weight:500;margin-top:10px}
+
+/* Journal nav */
+.jnav{border-bottom:1px solid var(--rule)}
+.jnav .wrap{display:flex;align-items:stretch;flex-wrap:wrap}
+.menus{display:flex;flex-wrap:wrap;align-items:center;gap:0 46px;padding-block:14px;padding-right:32px;margin-right:auto}
+.dd{position:relative}
+.dd>button,.menus>a{font:inherit;font-size:17px;background:none;border:0;color:var(--fg);cursor:pointer;padding:6px 0;display:inline-flex;align-items:center;gap:10px}
+.dd>button svg{width:14px;height:14px;stroke:var(--link);fill:none;stroke-width:2;transition:transform .15s}
+.dd>button[aria-expanded="true"] svg{transform:rotate(180deg)}
+.dd ul{position:absolute;left:0;top:100%;z-index:5;background:var(--bg);border:1px solid var(--rule);list-style:none;margin:6px 0 0;padding:8px 0;min-width:240px}
+.dd ul a{display:block;padding:6px 18px;font-size:16px;color:var(--fg)}
+.dd ul a:hover,.dd ul a:focus{background:var(--panel);text-decoration:none;color:var(--link)}
+.search{display:flex;align-items:center;border-left:1px solid var(--rule);padding:12px 16px;gap:8px;flex:1 1 380px;max-width:520px}
+.search input{flex:1;min-width:0;border:0;background:transparent;color:var(--fg);font:inherit;font-size:17px;padding:8px 2px}
+.search input::placeholder{color:var(--muted)}
+.search button{width:48px;height:48px;border:0;background:var(--link);color:#fff;display:grid;place-items:center;cursor:pointer;border-radius:0}
+.search button svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2}
+.side-links{display:flex}
+.side-links a{display:flex;align-items:center;padding:12px 24px;border-left:1px solid var(--rule);color:var(--fg);font-size:17px}
+.side-links a:last-child{border-right:1px solid var(--rule)}
+.search-msg{font-size:14px;color:var(--muted);padding-block:6px}
+
+/* Info strip */
+.strip{background:var(--strip)}
+.strip .wrap{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 12px;padding-block:14px;font-size:17px;text-align:center}
+.badge{font-size:12px;border:1px solid var(--muted);border-radius:2px;padding:1px 8px;line-height:1.6}
+.strip a{text-decoration:underline;text-underline-offset:4px}
+
+/* Body */
+.body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:40px 70px;padding-block:40px 10px}
+.panel{background:var(--panel);padding:34px 30px 30px}
+.panel h2,.glance h2,.sec h2{font-size:28px}
+.panel p{margin:20px 0 0;max-width:72ch}
+.kw{margin-top:18px;font-size:16px;color:var(--fg)}
+.kw em{font-style:normal}
+.panel .more{display:inline-block;margin-top:22px}
+.glance h3{font-size:20px;margin-top:26px}
+.glance p{margin:6px 0 0;font-size:16px}
+.glance .meta{font-size:14px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding:0;list-style:none}
+.chips li{font-size:14px;border:1px solid var(--rule);border-radius:2px;padding:2px 10px;line-height:1.6;color:var(--fg)}
+.btn{display:inline-flex;align-items:center;gap:14px;border:2px solid var(--link);color:var(--link);padding:8px 16px;font-size:17px;margin-top:26px;background:none;font-family:inherit;cursor:pointer}
+.btn:hover{text-decoration:none;background:var(--strip)}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2}
+
+/* Listing sections */
+.sec{padding-block:44px 4px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:14px}
+.sec-head .meta{font-size:14px;color:var(--muted)}
+.list{list-style:none;margin:0;padding:0}
+.item{padding:22px 0;border-bottom:1px solid var(--rule)}
+.label{font-size:14px;color:var(--muted)}
+.item-title{display:block;font-size:18px;font-weight:500;line-height:1.45;margin-top:4px;max-width:110ch}
+.authors{font-size:15px;color:var(--muted);margin-top:4px}
+.pub-sub{font-size:20px;margin-top:26px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.cite{margin:4px 0 0;font-size:17px;line-height:1.65;max-width:120ch}
+.cite b{font-weight:700}
+.cite a{overflow-wrap:anywhere}
+.actions a{font-size:15px}
+.venue{font-size:15px;color:var(--muted)}
+.venue i{font-style:italic}
+.ph-text{color:var(--faint);font-style:normal;background:var(--panel);padding:0 4px;border-radius:2px}
+.actions{display:flex;flex-wrap:wrap;gap:4px 26px;margin-top:8px;font-size:15px}
+.actions button{font:inherit;background:none;border:0;padding:0;color:var(--link);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.actions button svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;transition:transform .15s}
+.actions button[aria-expanded="true"] svg{transform:rotate(180deg)}
+.actions .off{color:var(--faint)}
+.abstract{margin-top:10px;background:var(--panel);padding:12px 16px;font-size:15px;color:var(--muted)}
+.item ul.pts{margin:8px 0 0;padding-left:20px;font-size:16px}
+.item ul.pts li{margin-top:2px}
+.dates{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.figures{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:16px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.fig{padding:14px 18px}
+.fig+.fig{border-left:1px solid var(--rule)}
+.fig .n{font-size:28px;color:var(--navy);line-height:1.2;font-variant-numeric:tabular-nums}
+:root[data-theme="dark"] .fig .n{color:var(--link-strong)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .fig .n{color:var(--link-strong)}}
+.fig .l{font-size:14px;color:var(--muted)}
+
+.twocol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 70px}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{text-align:left;vertical-align:top;padding:12px 16px 12px 0;border-bottom:1px solid var(--rule)}
+th{font-weight:500;width:190px;white-space:nowrap}
+
+.contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:20px;border-top:1px solid var(--rule)}
+.contact div{padding:16px 18px 16px 0}
+.contact .k{font-size:14px;color:var(--muted)}
+.contact .v{font-size:17px;word-break:break-word;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.copy{font:inherit;font-size:13px;border:1px solid var(--rule);background:none;color:var(--link);padding:0 8px;border-radius:2px;cursor:pointer}
+
+footer{background:var(--panel);margin-top:60px;font-size:14px;color:var(--muted)}
+footer .wrap{padding-block:36px}
+.fcols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.fcols h3{font-size:14px;font-weight:600;color:var(--fg);text-transform:uppercase;letter-spacing:.8px}
+.fcols ul{list-style:none;margin:10px 0 0;padding:0;line-height:2}
+.fcols a{color:var(--muted)}
+.fcols a:hover{color:var(--link)}
+.fbase{border-top:1px solid var(--rule);margin-top:28px;padding-top:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+mark{background:#ffe9a8;color:#2e2e2e;padding:0 2px}
+
+@media (max-width:1100px){
+  .mast .wrap{grid-template-columns:150px minmax(0,1fr)}
+  .cover{width:150px}
+  .metrics{grid-column:1/-1;padding-bottom:24px}
+  .metric:first-child{padding-left:0}
+  .search{order:3;max-width:none;border-left:0;border-top:1px solid var(--rule);flex-basis:100%;padding-inline:0}
+  .side-links{margin-left:auto}
+}
+@media (max-width:820px){
+  .figures{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fig:nth-child(3){border-left:0}
+  .fig:nth-child(n+3){border-top:1px solid var(--rule)}
+  .body,.twocol{grid-template-columns:minmax(0,1fr)}
+  .fcols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .contact{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .mast{margin-top:20px}
+  .mast .wrap{grid-template-columns:minmax(0,1fr);min-height:0;padding-block:0 8px}
+  .cover{width:150px;margin-top:-20px}
+  .metrics{flex-wrap:nowrap}
+  .metric{padding:0 12px}
+  .metric:first-child{padding-left:0}
+  .metric .l{font-size:14px}
+  .menus{gap:0 26px}
+  .side-links{width:100%;margin-left:0}
+  .side-links a{flex:1;justify-content:center;padding-inline:8px}
+  .side-links a:first-child{border-left:0}
+  .side-links a:last-child{border-right:0}
+  .figures{grid-template-columns:minmax(0,1fr)}
+  .fig+.fig{border-left:0;border-top:1px solid var(--rule)}
+  th{white-space:normal;width:120px}
+  .panel{padding:24px 18px}
+  .util nav ul{gap:4px 20px}
+}
+
+/* Company profile presentation */
+.deck{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:0;margin-top:28px;border:1px solid var(--rule)}
+.deck-info{padding:28px 28px 24px;background:var(--panel);display:flex;flex-direction:column;gap:12px}
+.deck-info h3{font-size:22px}
+.deck-info p{margin:0;font-size:16px;color:var(--muted)}
+.deck-info ul{margin:0;padding-left:18px;font-size:16px}
+.deck-info .meta{font-size:14px;color:var(--muted)}
+.deck-stage{position:relative;background:#2b2f36;display:flex;flex-direction:column;align-items:center;padding:28px 64px 18px;min-width:0}
+.deck-view{position:relative;width:100%;max-width:520px;aspect-ratio:1000/1414}
+.deck-view img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .35s ease;box-shadow:0 6px 24px rgba(0,0,0,.35);user-select:none;-webkit-user-drag:none;pointer-events:none}
+.deck-view img.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.deck-view img{transition:none}}
+.deck-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.35);color:#fff;display:grid;place-items:center;cursor:pointer}
+.deck-nav:hover{background:rgba(0,0,0,.6)}
+.deck-nav:disabled{opacity:.3;cursor:default}
+.deck-nav svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2}
+.deck-prev{left:12px}.deck-next{right:12px}
+.deck-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;max-width:520px;margin-top:14px;color:#d6d9df;font-size:14px}
+.deck-thumbs{display:flex;gap:10px}
+.deck-thumbs button{width:44px;height:62px;padding:0;border:2px solid transparent;background:none;cursor:pointer;opacity:.6}
+.deck-thumbs button[aria-current="true"]{border-color:#e9711c;opacity:1}
+.deck-thumbs img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+@media (max-width:900px){.deck{grid-template-columns:minmax(0,1fr)}.deck-stage{padding:20px 52px 14px}}
+@media (max-width:480px){.deck-stage{padding:16px 44px 12px}.deck-nav{width:36px;height:36px}.deck-prev{left:4px}.deck-next{right:4px}}
+
+/* Technical showcase deck (HTML slides) */
+.tdeck{margin-top:28px;border:1px solid var(--rule)}
+.tdeck-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;padding:18px 24px;background:var(--panel);border-bottom:1px solid var(--rule)}
+.tdeck-head h3{font-size:22px}
+.tdeck-head .meta{font-size:14px;color:var(--muted)}
+.tstage{background:#2b2f36;padding:26px 64px 18px;position:relative}
+.tslides{display:grid;max-width:980px;margin:0 auto}
+.tslide{grid-area:1/1;background:#ffffff;color:#2e2e2e;opacity:0;visibility:hidden;transition:opacity .35s ease;box-shadow:0 6px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.tslide.on{opacity:1;visibility:visible}
+@media (prefers-reduced-motion:reduce){.tslide{transition:none}}
+.tslide .sh{background:#1f2d7b;color:#fff;padding:14px 26px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.tslide .sh h4{margin:0;font-size:22px;font-weight:400}
+.tslide .sh span{font-size:13px;opacity:.75;white-space:nowrap}
+.tslide .sb{padding:20px 26px 24px;font-size:16px;line-height:1.6;display:grid;gap:18px}
+.tslide .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.tslide h5{margin:0 0 4px;font-size:17px;color:#1f2d7b;font-weight:700}
+.tslide p{margin:0}
+.tslide ul{margin:0;padding-left:18px}
+.tslide li{margin-top:3px}
+.tslide .tw{overflow-x:auto}
+.tslide table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+.tslide th,.tslide td{border-bottom:1px solid #dcdcdc;padding:6px 10px 6px 0;text-align:left;width:auto;white-space:nowrap;font-weight:400}
+.tslide thead th{font-weight:700;color:#1f2d7b;border-bottom:2px solid #1f2d7b}
+.tslide .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #dcdcdc;border-bottom:1px solid #dcdcdc}
+.tslide .kpi{padding:10px 12px}
+.tslide .kpi+.kpi{border-left:1px solid #dcdcdc}
+.tslide .kpi b{display:block;font-size:24px;font-weight:400;color:#1f2d7b}
+.tslide .kpi span{font-size:13px;color:#505050}
+.tslide .layers{counter-reset:l;list-style:none;padding:0}
+.tslide .layers li{counter-increment:l;padding-left:26px;position:relative}
+.tslide .layers li::before{content:counter(l);position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;background:#e8edf7;color:#1f2d7b;font-size:12px;display:grid;place-items:center}
+.tslide .note{font-size:13px;color:#505050}
+.tbar{display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:980px;margin:14px auto 0;color:#d6d9df;font-size:14px;flex-wrap:wrap}
+.tdots{display:flex;gap:8px;flex-wrap:wrap}
+.tdots button{font:inherit;font-size:13px;color:#d6d9df;background:none;border:1px solid rgba(255,255,255,.3);border-radius:2px;padding:2px 10px;cursor:pointer}
+.tdots button[aria-current="true"]{border-color:#e9711c;color:#fff;background:rgba(233,113,28,.18)}
+.tstage .deck-prev{left:12px}.tstage .deck-next{right:12px}
+@media (max-width:760px){.tstage{padding:18px 46px 14px}.tslide .two{grid-template-columns:minmax(0,1fr)}.tslide .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.tslide .kpi:nth-child(3){border-left:0}.tslide .kpi:nth-child(n+3){border-top:1px solid #dcdcdc}}
+@media (max-width:480px){.tstage{padding:14px 40px 12px}.tslide .sb{padding:16px}.tslide .sh{padding:12px 16px}.tslide .sh span{display:none}}
+
+.tlegend{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:15px}
+.tlegend .ticon{width:34px;height:34px}
+.tlegend span{margin-right:14px}
+.ticon{fill:#1f2d7b;stroke:#fff;stroke-width:1.5}
+.hgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.hcard{border:1px solid #dcdcdc;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.hhead{display:flex;justify-content:space-between;align-items:baseline}
+.hhead b{font-size:20px;font-weight:400;color:#1f2d7b}
+.hhead span{font-size:13px;color:#505050}
+.hfig{display:flex;align-items:flex-end;justify-content:space-around;gap:6px;background:#f4f6fa;padding:8px 4px}
+.hfig .ticon{width:44px;height:44px}
+.tfp{width:72px;height:auto}
+.tfp rect{fill:#e8edf7;stroke:#1f2d7b;stroke-width:1.2}
+.tfp text{font-size:9px;fill:#505050;font-family:"Times New Roman",serif}
+.hcard dl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 6px;margin:0;font-size:13.5px}
+.hcard dt{color:#505050}
+.hcard dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hcard p{font-size:13.5px;color:#505050}
+@media (max-width:900px){.hgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.hgrid{grid-template-columns:minmax(0,1fr)}.hfig{justify-content:center;gap:30px}}
+
+/* Technical note (paper style) */
+.tnote{margin-top:28px;border:1px solid var(--rule);background:var(--bg)}
+.tn-head{padding:24px 28px 18px;border-bottom:1px solid var(--rule)}
+.tn-head h3{font-size:24px;margin-top:6px;line-height:1.3;max-width:70ch}
+.tn-head .authors{margin-top:8px}
+.tn-meta{font-size:14px;color:var(--muted);margin-top:4px;font-style:italic}
+.tn-abs{background:var(--panel);padding:20px 28px 22px}
+.tn-abs h4,.tn-text h4{font-size:19px;font-weight:700;margin:0 0 6px}
+.tn-abs p{margin:0;max-width:110ch;text-align:justify}
+.tn-abs .kw{margin-top:10px;font-size:15px;color:var(--muted)}
+.tn-toggle{margin-top:16px}
+.tn-toggle svg{transition:transform .15s}
+.tn-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+.tn-body{display:grid;grid-template-columns:200px minmax(0,1fr);gap:0 36px;padding:24px 28px 28px}
+.tn-body[hidden]{display:none}
+.tn-toc{font-size:15px;position:sticky;top:12px;align-self:start}
+.tn-toc ol{margin:8px 0 0;padding-left:20px;line-height:1.9}
+.tn-toc a{color:var(--fg)}
+.tn-toc a:hover{color:var(--link)}
+.tn-text{min-width:0}
+.tn-text h4{margin-top:22px;scroll-margin-top:16px}
+.tn-text h4:first-child{margin-top:0}
+.tn-text p{margin:6px 0 0;text-align:justify}
+.tn-text ul{margin:6px 0 0;padding-left:20px}
+.tn-text li{margin-top:4px}
+.tn-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 28px}
+.tn-note{font-size:14px;color:var(--muted)}
+.tnote .tw{overflow-x:auto;margin-top:10px}
+.tnote table{font-size:15px;font-variant-numeric:tabular-nums}
+.tnote caption{caption-side:top;text-align:left;font-size:15px;padding-bottom:6px;color:var(--fg)}
+.tnote th,.tnote td{padding:7px 12px 7px 0;width:auto;white-space:normal}
+.tnote thead th{border-bottom:2px solid var(--fg);font-weight:700}
+.tnote tbody td:first-child{white-space:nowrap}
+.tnote figure{margin:14px 0 4px}
+.nfig{width:100%;height:auto;max-height:220px;background:var(--panel);padding:10px}
+.nfig text{font-size:11px;fill:var(--fg);font-family:"Times New Roman",serif}
+.nfig .f-s{font-size:9.5px;fill:var(--muted)}
+.nfig .f-roof{fill:var(--link)}
+.nfig .f-wall{fill:var(--cover-bg);stroke:var(--link);stroke-width:1.2}
+.nfig .f-fp{fill:var(--cover-bg);stroke:var(--link);stroke-width:1.2}
+.nfig .f-gl{stroke:var(--muted);stroke-width:1}
+figcaption{font-size:14px;color:var(--muted);margin-top:6px}
+@media (max-width:900px){.tn-body{grid-template-columns:minmax(0,1fr)}.tn-toc{position:static;margin-bottom:16px}.tn-two{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:480px){.tn-head,.tn-abs,.tn-body{padding-left:16px;padding-right:16px}}
+
+
+/* Figure 2 chart */
+.tn-chart{max-width:640px;margin:18px 0 6px}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:"Times New Roman",serif}
+.c-grid{stroke:var(--rule);stroke-width:1}
+.c-ax{font-size:12px;fill:var(--muted)}
+.c-val{font-size:12px;fill:var(--fg)}
+.c-a{fill:var(--c-a)}
+.c-req{fill:var(--c-req)}
+.c-hitbox{fill:transparent}
+.c-hit:hover .c-a,.c-hit:hover .c-req{opacity:.8}
+.c-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted);margin:0 0 6px}
+.c-legend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.c-legend .sw.c-a{background:var(--c-a)}.c-legend .sw.c-req{background:var(--c-req)}
+.c-tip{position:fixed;z-index:20;pointer-events:none;background:var(--bg);color:var(--fg);border:1px solid var(--rule);box-shadow:0 4px 14px rgba(0,0,0,.15);padding:6px 10px;font-size:14px;white-space:pre-line;max-width:260px}
+.c-tip[hidden]{display:none}
+
+/* social icons (monochrome, official marks) */
+.soc{list-style:none;margin:0;padding:0;display:flex;gap:14px;align-items:center}
+.soc a{display:inline-grid;place-items:center;color:var(--fg)}
+.soc a:hover{color:var(--link);text-decoration:none}
+.bi{width:20px;height:20px;fill:currentColor;display:block}
+.util nav .bi{fill:currentColor;stroke:none}
+.soc-hero{gap:18px}
+.soc-hero a{color:var(--on-navy);opacity:.85}
+.soc-hero a:hover{color:var(--on-navy);opacity:1}
+.soc-hero .bi{width:22px;height:22px}
+.soc-foot a{color:var(--muted)}
+.soc-foot .bi{width:18px;height:18px}
+.profiles{margin-top:8px;border-top:1px solid var(--rule);padding-top:14px}
+.profiles .k{font-size:14px;color:var(--muted)}
+.profiles ul{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.profiles a{display:flex;gap:12px;align-items:center;color:var(--fg);padding:10px 12px;border:1px solid var(--rule);border-radius:2px;min-width:0}
+.profiles a:hover{border-color:var(--link);text-decoration:none}
+.profiles a:hover b{color:var(--link)}
+.profiles .bi{width:26px;height:26px;flex:none}
+.profiles span{min-width:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere;line-height:1.4}
+.profiles b{font-weight:600;color:var(--fg);font-size:16px}
+@media (max-width:900px){.profiles ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.profiles ul{grid-template-columns:minmax(0,1fr)}}
+
+/* hero contact button */
+.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 22px;margin-top:16px}
+.cta{display:inline-flex;align-items:center;gap:9px;background:var(--brand);color:#fff;font-size:16px;font-weight:700;padding:7px 18px;border-radius:2px;border:2px solid var(--brand)}
+.cta:hover{background:transparent;color:#fff;text-decoration:none;border-color:#fff}
+.cta svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.hero-actions .soc-hero{margin-top:0}
+
+/* heat-loss block */
+.cutaway svg{display:block;width:100%;height:auto}
+.cw-ln{fill:none;stroke:var(--fg);stroke-width:2.2}
+.cw-ah{fill:var(--fg)}
+.cw-n{font-size:17px;fill:var(--fg);font-family:"Times New Roman",serif}
+.cw-v{font-size:17px;font-weight:700;fill:#d0202b;font-family:"Times New Roman",serif}
+:root[data-theme="dark"] .cw-v{fill:#ff6b72}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cw-v{fill:#ff6b72}}
+.geo-stack{display:grid;gap:18px;margin-top:22px}
+.geo{border-top:1px solid var(--rule);margin-top:28px;padding-top:24px}
+.geo-title{font-size:22px;margin-top:4px}
+.geo-h{font-size:20px;font-weight:700;margin:28px 0 12px}
+.geo-split{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px;align-items:start}
+.geo-split-b{margin-top:22px}
+.factors{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.factors li{border:1px solid var(--rule);border-left:3px solid var(--navy);padding:10px 12px;background:var(--panel)}
+:root[data-theme="dark"] .factors li{border-left-color:var(--link)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .factors li{border-left-color:var(--link)}}
+.factors b{display:block;font-size:16px}
+.factors span{display:block;font-size:14px;color:var(--muted);line-height:1.45;margin-top:2px}
+.geo-fig{margin:0}
+.geo-fig img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+.geo-fig figcaption,.scan2model figcaption,.inputs figcaption{font-size:14px;color:var(--muted);margin-top:6px}
+.svc{margin:0;display:grid;gap:2px}
+.svc dt{font-weight:700;font-size:16px;margin-top:8px}
+.svc dt:first-child{margin-top:0}
+.svc dd{margin:0;font-size:15px;color:var(--muted)}
+.inputs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.inputs figure{margin:0}
+.inputs img{display:block;width:100%;aspect-ratio:500/427;object-fit:cover;border:1px solid var(--rule);background:#fff}
+.inputs figcaption{text-align:center;font-weight:600;color:var(--fg)}
+.scan2model{margin:16px 0 0}
+.s2m{display:grid;grid-template-columns:minmax(0,1.15fr) auto minmax(0,1fr);gap:14px;align-items:center}
+.s2m img{display:block;width:100%;height:auto;border:1px solid var(--rule)}
+.s2m .arr{font-size:30px;color:var(--brand)}
+.geo-figs{grid-template-columns:repeat(4,minmax(0,1fr))}
+.gview{max-width:760px;aspect-ratio:16/10;background:#f0f0f0}
+.gview img{object-fit:contain;box-shadow:none}
+.gbar{max-width:760px}
+.gthumbs{flex-wrap:wrap;justify-content:flex-end}
+.gthumbs button{width:54px;height:36px}
+.gdeck{margin-top:28px}
+.gdeck .deck-stage{padding-inline:60px}
+@media (max-width:900px){.geo-split{grid-template-columns:minmax(0,1fr)}.inputs{grid-template-columns:repeat(2,minmax(0,1fr))}.geo-figs{grid-template-columns:repeat(2,minmax(0,1fr))}.geo-figs .fig:nth-child(3){border-left:0}.geo-figs .fig:nth-child(n+3){border-top:1px solid var(--rule)}}
+@media (max-width:560px){.factors{grid-template-columns:minmax(0,1fr)}.s2m{grid-template-columns:minmax(0,1fr)}.s2m .arr{transform:rotate(90deg);justify-self:center}.gdeck .deck-stage{padding-inline:44px}.gthumbs button{width:40px;height:28px}}
+
+/* simplified header */
+.topnav{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 30px;align-items:center}
+.topnav a{color:var(--fg);font-size:17px}
+.topnav a:hover{color:var(--link);text-decoration:none}
+.topnav .dl{border:1px solid var(--link);color:var(--link);padding:5px 12px;border-radius:2px}
+.panel p+p{margin-top:12px}
+/* research statement */
+.rstate{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:20px;border-top:1px solid var(--rule)}
+.rstate>div{padding:18px 22px 4px 0}
+.rstate>div+div{padding-left:22px;border-left:1px solid var(--rule)}
+.rs-k{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.rstate p{margin:6px 0 0;font-size:18px;line-height:1.65}
+@media (max-width:820px){.rstate{grid-template-columns:minmax(0,1fr)}.rstate>div+div{padding-left:0;border-left:0;border-top:1px solid var(--rule)}}
+.atabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+.atabs button{white-space:nowrap}
+/* journal-style article tabs */
+.agrid[hidden]{display:none}
+.atabs{display:flex;flex-wrap:wrap;gap:0 8px;border-bottom:1px solid var(--fg);margin-top:20px}
+.atabs button{font:inherit;font-size:20px;background:none;border:0;border-bottom:4px solid transparent;color:var(--fg);padding:10px 18px 8px;cursor:pointer;margin-bottom:-1px}
+.atabs button[aria-selected="true"]{border-bottom-color:var(--fg)}
+.atabs button:hover{color:var(--link)}
+.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:36px 40px;padding-top:30px}
+.acard{display:flex;flex-direction:column;gap:6px;min-width:0}
+.akind{font-size:15px;color:var(--fg);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.akind .dot{width:9px;height:9px;border-radius:50%;background:#3ba55c;display:inline-block}
+.akind .oa{font-style:italic}
+.acard h3{font-size:21px;line-height:1.45;font-weight:400}
+.acard h3 a{color:var(--fg)}
+.acard h3 a:hover{color:var(--link);text-decoration:underline}
+.aauth{font-size:16px;color:var(--fg)}
+.adate{font-size:16px;color:var(--fg)}
+.alink{display:flex;align-items:center;gap:18px;margin-top:6px;font-size:17px}
+.alink a{display:inline-flex;align-items:center;gap:6px}
+.alink .citebtn{font:inherit;font-size:15px;background:none;border:0;color:var(--link);cursor:pointer;padding:0}
+.pdfi{width:20px;height:20px}
+
+@media (max-width:600px){.agrid{grid-template-columns:minmax(0,1fr);gap:30px}.atabs button{font-size:17px;padding:8px 10px}}
+.atabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.atabs::-webkit-scrollbar{display:none}
+
+/* ===== v27 consistency pass ===== */
+.hero-actions{margin-top:16px}
+.notes{display:grid;gap:28px;margin-top:24px}
+.notes .tnote{margin-top:0}
+.tnote .tn-head h3,.tn-abs p,.panel p,.item-title,.cite,.geo-lead,.statement{max-width:none}
+.tn-text .factors{margin-top:12px}
+.tn-text .geo-split{margin-top:14px}
+.tn-text .geo-fig{margin-top:12px}
+.tn-text .svc{margin-top:8px}
+.tn-text .gdeck{margin-top:12px}
+.tn-body{grid-template-columns:220px minmax(0,1fr)}
+.sec{padding-block:48px 0}
+.sec-head h2{font-size:28px}
+.item{padding-top:20px}
+#experience .item{border-bottom:0}
+footer{margin-top:56px}
+footer .wrap{padding-block:22px}
+footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
+.tn-text .gdeck{grid-template-columns:minmax(0,1fr)}
+.tn-text .gdeck .deck-info{padding:16px 20px;gap:4px}
+.tn-text .gdeck .deck-info p{text-align:left}
+.tn-text .gdeck .deck-info h3{font-size:20px}
+.body{align-items:start}
+@media (max-width:900px){.tn-body{grid-template-columns:minmax(0,1fr)}}
+.rs-lead{font-size:20px;line-height:1.6;margin:18px 0 0}
+.panel p.kw2{margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+.kw2 span{display:block;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.rstate b{font-weight:700}
+.panel p{margin:14px 0 0}
+
+/* project case study + BIM viewer */
+.case{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--rule)}
+.case-t{font-size:24px;margin-top:4px}
+.case-lead{margin:10px 0 0;font-size:17px;line-height:1.7}
+.case-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:16px 0 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.case-meta>div{padding:10px 16px 10px 0}
+.case-meta>div+div{padding-left:16px;border-left:1px solid var(--rule)}
+.case-meta dt,.case-list dt{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.case-meta dd{margin:2px 0 0;font-size:15px;line-height:1.5}
+.case-sec h4,.bv-h{font-size:19px;font-weight:700;margin:22px 0 8px}
+.case-sec p{margin:0;line-height:1.7}
+.case-flow{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 0;counter-reset:s;font-size:15px}
+.case-flow li{counter-increment:s;display:flex;align-items:center}
+.case-flow li::before{content:counter(s);display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--strip);color:var(--fg);font-size:12px;margin-right:6px}
+.case-flow li+li::after{content:none}
+.case-flow li:not(:last-child)::after{content:"→";color:var(--muted);margin:0 10px}
+.case-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 44px}
+.case-list{display:grid;grid-template-columns:130px minmax(0,1fr);gap:8px 16px;margin:0}
+.case-list dt{padding-top:3px}
+.case-list dd{margin:0;line-height:1.6}
+@media (max-width:820px){.case-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.case-meta>div:nth-child(3){border-left:0;padding-left:0}.case-meta>div:nth-child(n+3){border-top:1px solid var(--rule)}.case-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.case-meta{grid-template-columns:minmax(0,1fr)}.case-meta>div+div{border-left:0;padding-left:0;border-top:1px solid var(--rule)}.case-list{grid-template-columns:minmax(0,1fr);gap:0}.case-list dd{margin-bottom:10px}}
+
+:root{--bv-bg:#eef2f6;--bv-line:#b9c3ce;--bv-sel:#ffcf33}
+:root[data-theme="dark"]{--bv-bg:#232a33;--bv-line:#46505c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bv-bg:#232a33;--bv-line:#46505c}}
+.bv{border:1px solid var(--bv-line);background:var(--bg);display:flex;flex-direction:column}
+.bv-bar{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--bv-line);flex-wrap:wrap}
+.bv-sp{flex:1}
+.bv-b{font:inherit;font-size:14px;display:inline-flex;align-items:center;gap:6px;background:var(--bg);color:var(--fg);border:1px solid var(--rule);border-radius:2px;padding:3px 10px;cursor:pointer;line-height:1.5}
+.bv-b:hover{border-color:var(--link);color:var(--link)}
+.bv-b svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bv-b[hidden]{display:none}
+.bv-stage{position:relative;background:var(--bv-bg);height:clamp(380px,52vw,600px);overflow:hidden;border-bottom:1px solid var(--bv-line)}
+.bv-stage canvas{display:block;width:100%;height:100%;touch-action:none}
+.bv-load{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-size:14px;color:var(--muted);background:var(--bv-bg) url(model-poster.webp) center/contain no-repeat}
+.bv-load[hidden]{display:none}
+.bv-load span{background:var(--bv-bg);padding:2px 8px}
+.bv-load b{display:block;width:140px;height:3px;background:var(--rule)}
+.bv-load i{display:block;height:100%;width:0;background:var(--link);transition:width .2s}
+.bv-leg{list-style:none;margin:0;padding:10px 12px;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:14px}
+.bv-leg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.15)}
+.bv-hint{font-size:14px;color:var(--muted);margin:8px 0 0}
+.bv:fullscreen{width:100vw;height:100vh;border:0}
+.bv:fullscreen .bv-stage{height:auto;flex:1}
+@media (max-width:700px){.bv-stage{height:clamp(360px,110vw,520px)}.bv-leg{gap:2px 14px;font-size:13px}}
+</style>
+<style>.note-page{padding-block:28px 10px}.note-page .tnote{margin-top:0}.note-page .tn-body{display:grid}</style>
+</head><body>
+<header class="wrap util">
+  <a class="brand" href="index.html" aria-label="Alinda.B — home">Alinda<span class="dot">.B</span></a>
+  <div class="util-right">
+  <nav aria-label="Site"><ul class="topnav"><li><a href="index.html#notes">← Back to profile</a></li></ul></nav>
+  <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false">
+    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    <span id="themeLbl">Dark mode</span>
+  </button>
+  </div>
+</header>
+<main class="wrap note-page" id="top">
+<article class="tnote" id="residential-tech" aria-labelledby="tn-title">
+      <div class="tn-head">
+        <div class="label">Technical note · Project documentation · HVAC &amp; plumbing installation modelling</div>
+        <h3 id="tn-title">Prefabricated modular timber single-family houses: technical basis for HVAC and plumbing installation modelling</h3>
+        <div class="authors"><b>Alinda Bhattacharjee</b></div>
+        <div class="tn-meta">Compiled from the manufacturer’s 2025 technical specification · Client, product and project names withheld</div>
+      </div>
+      <div class="tn-abs">
+        <h4>Summary</h4>
+        <p>This note documents the technical parameters that governed the HVAC and plumbing installation models produced for 50+ prefabricated single-family houses in the Netherlands. The houses are factory-built timber-frame dwellings with cross-laminated timber (CLT) upper floors and a prefabricated concrete ground floor, delivered to site at finished level. Ten ground-bound variants in two typologies (one-storey and two-storey, both with pitched roofs) span 80–155 m² gross floor area. All dwellings are all-electric: a heat pump supplies underfloor heating and domestic hot water via a buffer vessel, ventilation is balanced with heat recovery, and roof-integrated PV supplies on-site generation. Design targets include envelope Rc values of 6.3 / 4.7 / 4.0 m²K/W (roof / façade / floor), airtightness qv;10 ≤ 0.4 dm³/s·m², energy label A+++ or better and an environmental performance (MPG) below 0.5. The models were coordinated to Dutch NEN and ISSO requirements.</p>
+        <p class="kw"><b>Keywords:</b> prefabrication; modular timber housing; CLT; all-electric; heat pump; balanced ventilation with heat recovery; BENG; NEN 1010; ISSO; installation modelling; DfMA</p>
+        
+      </div>
+      <div class="tn-body" id="tnBody">
+        <nav class="tn-toc" aria-label="Technical note contents"><b>Contents</b><ol>
+          <li><a href="#tn1">Scope</a></li><li><a href="#tn2">Building system</a></li><li><a href="#tn3">House typologies</a></li><li><a href="#tn4">Building envelope</a></li><li><a href="#tn5">Interior construction</a></li><li><a href="#tn6">Building services</a></li><li><a href="#tn7">Plumbing and sanitary</a></li><li><a href="#tn8">Performance targets</a></li><li><a href="#tn9">Circularity and production</a></li><li><a href="#tn10">Modelling considerations</a></li></ol></nav>
+        <div class="tn-text">
+        <h4 id="tn1">1. Scope</h4>
+        <p>The houses are designed for permanent occupation under the Dutch Building Decree for the living environment (Bbl). My work covered complete HVAC and plumbing installation models in Autodesk Revit for 50+ single-family dwellings, coordinated with the prefabricated timber elements and checked against NEN and ISSO requirements. Apartment and back-to-back variants of the same building system are outside the scope of this note.</p>
+
+        <h4 id="tn2">2. Building system</h4>
+        <ul>
+          <li><b>Foundation and ground floor:</b> insulated, self-supporting prefabricated concrete system floor with integrated edge and foundation beams, placed in segments on concrete bored or driven piles. There is no crawl space below the dwelling.</li>
+          <li><b>Upper floors:</b> prefabricated timber-frame or CLT floor elements; the CLT underside is UV-treated and left exposed as the ceiling.</li>
+          <li><b>Load-bearing walls and roof:</b> timber-frame construction; the pitched roof is a prefabricated insulated system roof.</li>
+          <li><b>Delivery:</b> each house is produced off-site to finished level and transported in approximately three truckloads; on-site work after piling is limited to assembly and minor finishing.</li>
+          <li><b>Quality assurance:</b> factory production under KOMO certification for timber-frame construction (0904), timber roof structures (0101) and assembly of prefabricated roof segments (1513-0442); timber sourced under STIP, FSC® and PEFC certification.</li>
+        </ul>
+
+        <h4 id="tn3">3. House typologies</h4>
+        <p>Two ground-bound typologies are used. Type A has one full storey with bedrooms under a steep pitched roof; Type C has two full storeys plus an attic floor. Variants A4–A6 are lifetime-proof: kitchen, living room, bathroom and a bedroom are all on the ground floor. Figure 1 shows the schematic sections and the footprints of all variants at a common scale; Table 1 lists their dimensions.</p>
+        <figure><svg viewBox="0 0 849 140" class="nfig" role="img" aria-label="Figure 1: schematic sections of Type A and Type C, and footprints of the ten variants to a common scale"><g transform="translate(10,0)"><path d="M0 60 L45 18 L90 60 Z" class="f-roof"/><rect x="6" y="60" width="78" height="40" class="f-wall"/><line x1="6" y1="100" x2="84" y2="100" class="f-gl"/><text x="45" y="118" text-anchor="middle">Type A</text><text x="45" y="131" text-anchor="middle" class="f-s">1 storey + pitched roof</text></g><g transform="translate(120,0)"><path d="M0 40 L45 0 L90 40 Z" class="f-roof"/><rect x="6" y="40" width="78" height="30" class="f-wall"/><rect x="6" y="70" width="78" height="30" class="f-wall"/><line x1="6" y1="100" x2="84" y2="100" class="f-gl"/><text x="45" y="118" text-anchor="middle">Type C</text><text x="45" y="131" text-anchor="middle" class="f-s">2 storeys + pitched roof</text></g><line x1="232" y1="10" x2="232" y2="132" class="f-gl" stroke-dasharray="3 3"/><rect x="250" y="12.700000000000003" width="37.8" height="87.3" class="f-fp"/><text x="268.9" y="118" text-anchor="middle">A1</text><text x="268.9" y="131" text-anchor="middle" class="f-s">4.2</text><rect x="299.8" y="12.700000000000003" width="40.5" height="87.3" class="f-fp"/><text x="320.1" y="118" text-anchor="middle">A2</text><text x="320.1" y="131" text-anchor="middle" class="f-s">4.5</text><rect x="352.3" y="12.700000000000003" width="48.6" height="87.3" class="f-fp"/><text x="376.6" y="118" text-anchor="middle">A3</text><text x="376.6" y="131" text-anchor="middle" class="f-s">5.4</text><rect x="412.90000000000003" y="10.0" width="48.6" height="90.0" class="f-fp"/><text x="437.2" y="118" text-anchor="middle">A4</text><text x="437.2" y="131" text-anchor="middle" class="f-s">5.4</text><rect x="473.50000000000006" y="10.0" width="56.7" height="90.0" class="f-fp"/><text x="501.9" y="118" text-anchor="middle">A5</text><text x="501.9" y="131" text-anchor="middle" class="f-s">6.3</text><rect x="542.2" y="10.0" width="59.4" height="90.0" class="f-fp"/><text x="571.9" y="118" text-anchor="middle">A6</text><text x="571.9" y="131" text-anchor="middle" class="f-s">6.6</text><rect x="613.6" y="12.700000000000003" width="40.5" height="87.3" class="f-fp"/><text x="633.9" y="118" text-anchor="middle">C1</text><text x="633.9" y="131" text-anchor="middle" class="f-s">4.5</text><rect x="666.1" y="12.700000000000003" width="43.2" height="87.3" class="f-fp"/><text x="687.7" y="118" text-anchor="middle">C2</text><text x="687.7" y="131" text-anchor="middle" class="f-s">4.8</text><rect x="721.3000000000001" y="12.700000000000003" width="45.9" height="87.3" class="f-fp"/><text x="744.3" y="118" text-anchor="middle">C3</text><text x="744.3" y="131" text-anchor="middle" class="f-s">5.1</text><rect x="779.2" y="12.700000000000003" width="48.6" height="87.3" class="f-fp"/><text x="803.5" y="118" text-anchor="middle">C4</text><text x="803.5" y="131" text-anchor="middle" class="f-s">5.4</text></svg><figcaption><b>Figure 1.</b> Schematic sections of the two typologies (left) and footprints of the ten variants at a common scale (right, width in m).</figcaption></figure>
+        <div class="tw"><table><caption><b>Table 1.</b> Dimensions and capacity of the single-family variants.</caption>
+          <thead><tr><th>Variant</th><th>Width × depth (mm)</th><th>GFA (m²)</th><th>Usable (m²)</th><th>Habitable (m²)</th><th>Volume (m³)</th><th>Occupants</th><th>Building layers</th><th>Layout notes</th></tr></thead><tbody>
+          <tr><td>A1</td><td>4,200 × 9,700</td><td>80</td><td>60</td><td>37</td><td>220</td><td>1–3</td><td>2</td><td>Combined toilet/shower at front with washer connection; 2 bedrooms; services under stairs</td></tr>
+          <tr><td>A2</td><td>4,500 × 9,700</td><td>87</td><td>63</td><td>40</td><td>250</td><td>1–3</td><td>2</td><td>As A1, wider bay; 26 m² living room</td></tr>
+          <tr><td>A3</td><td>5,400 × 9,700</td><td>105</td><td>77</td><td>49</td><td>270</td><td>1–3</td><td>2</td><td>Kitchen at front; sanitary room upstairs; washer connection on landing</td></tr>
+          <tr><td>A4</td><td>5,400 × 10,000</td><td>106</td><td>83</td><td>48</td><td>280</td><td>1–4</td><td>2</td><td>Lifetime-proof; ground-floor bedroom; 2 further bedrooms upstairs</td></tr>
+          <tr><td>A5</td><td>6,300 × 10,000</td><td>121</td><td>97</td><td>53</td><td>310</td><td>1–4</td><td>2</td><td>Lifetime-proof; separate toilet besides bathroom</td></tr>
+          <tr><td>A6</td><td>6,600 × 10,000</td><td>132</td><td>100</td><td>57</td><td>398</td><td>1–4</td><td>2</td><td>Lifetime-proof through-lounge; bedroom at rear</td></tr>
+          <tr><td>C1</td><td>4,500 × 9,700</td><td>129</td><td>99</td><td>57</td><td>292</td><td>3–5</td><td>3</td><td>2–3 bedrooms; washer and dryer connections in attic</td></tr>
+          <tr><td>C2</td><td>4,800 × 9,700</td><td>138</td><td>106</td><td>60</td><td>312</td><td>3–5</td><td>3</td><td>3 bedrooms; washer and dryer connections in attic</td></tr>
+          <tr><td>C3</td><td>5,100 × 9,700</td><td>146</td><td>113</td><td>68</td><td>332</td><td>3–5</td><td>3</td><td>3 bedrooms; loft hatch with folding ladder</td></tr>
+          <tr><td>C4</td><td>5,400 × 9,700</td><td>155</td><td>120</td><td>75</td><td>353</td><td>3–5</td><td>3</td><td>3 bedrooms; 35 m² living room; large free attic</td></tr>
+          </tbody></table></div>
+        <p class="tn-note">GFA = gross floor area (BVO); Usable = usable floor area (GO); Habitable = habitable floor area (VO), per NEN 2580. All variants have an attic storage space in the roof ridge.</p>
+
+        <h4 id="tn4">4. Building envelope</h4>
+        <div class="tn-two">
+          <div><p><b>Exterior wall</b> (outside → inside): cladding of choice; preservative-treated battens; water-resistant membrane; spruce timber frame with insulation; PE vapour control layer; gypsum fibreboard. A windstopper layer is added where required.</p>
+          <p><b>Party wall</b> (inside → outside): gypsum fibreboard; PE vapour control layer; insulated spruce timber frame; water-resistant membrane. The adjoining dwelling mirrors this build-up.</p>
+          <p><b>Pitched roof</b> (outside → inside): roof covering; tile battens and counter battens; vapour-open water-resistant membrane; insulated spruce timber frame; PE vapour control layer; white or brown chipboard. Element joints are finished with cover strips.</p></div>
+          <div><ul>
+            <li><b>Roof covering:</b> concrete tiles as standard; ceramic tiles or sedum as options; roof and/or façade penetrations for the drainage vent stack and mechanical ventilation; PV integrated into the roof plane.</li>
+            <li><b>Roof windows</b> with white or natural interior lining; dormers optional.</li>
+            <li><b>Window frames:</b> PVC as standard (timber optional), opening sections with draught seals; PVC front door with letter plate; insect screens where needed; aluminium sills.</li>
+            <li><b>Glazing:</b> HR++ insulating glass; safety, solar-control or triple glazing where required.</li>
+            <li><b>Hardware:</b> burglary resistance class 2, keyed-alike cylinders.</li>
+            <li><b>Rainwater:</b> aluminium eaves gutters on brackets and aluminium downpipes, optional leaf separators.</li>
+          </ul></div>
+        </div>
+
+        <h4 id="tn5">5. Interior construction</h4>
+        <ul>
+          <li><b>Partitions:</b> non-load-bearing timber stud walls lined with gypsum fibreboard; wall thickness can vary locally where services are integrated in the walls.</li>
+          <li><b>Doors and frames:</b> factory-finished steel frames without transom; flush lacquered doors; no thresholds except at bathroom and toilet (stone on ground floor, stainless steel upstairs); door undercuts provide the air-transfer opening required for ventilation.</li>
+          <li><b>Stairs:</b> spruce, factory-primed white, timber balustrades and handrail.</li>
+          <li><b>Floors:</b> ground floor smooth concrete, flatness class 4 (ready for floor covering); CLT upper floor left unfinished, suitable only for floating floor finishes, with underlay advised.</li>
+          <li><b>Ceilings:</b> exposed CLT; dropped ceilings in toilet, bathroom and entrance/landing.</li>
+          <li><b>Walls:</b> delivered wallpaper-ready, except the meter cupboard and technical room, which are left unfinished; meter cupboard back wall fitted with a meter board to utility requirements.</li>
+          <li><b>Service ducts:</b> ventilation ducts and stacks are boxed in on ground and first floor, and remain exposed in the attic and unfinished loft.</li>
+        </ul>
+
+        <h4 id="tn6">6. Building services</h4>
+        <div class="tw"><table><caption><b>Table 2.</b> Building services specification.</caption>
+          <thead><tr><th>System</th><th>Specification</th></tr></thead><tbody>
+          <tr><td>Energy concept</td><td>All-electric: space heating and domestic hot water are both electrically driven.</td></tr>
+          <tr><td>Space heating</td><td>Heat pump as primary source with underfloor heating on the ground floor; upper-floor habitable rooms have connection provisions for optional electric or low-temperature supplementary heating.</td></tr>
+          <tr><td>Domestic hot water</td><td>Heat pump with buffer vessel sized to the dwelling.</td></tr>
+          <tr><td>Ventilation</td><td>Balanced mechanical ventilation with heat recovery in all habitable rooms; filtered and pre-heated supply air; adjustable flow rate.</td></tr>
+          <tr><td>Electrical</td><td>Plug-in distribution board and pluggable wiring system, installed to NEN 1010; three-phase board with 8 standard circuits plus dedicated circuits for the PV system and the heat pump; white switchgear.</td></tr>
+          <tr><td>Lighting and power</td><td>One or more lighting points and socket outlets per habitable room; lighting points made as switched outlets just below the ceiling in the prefab walls.</td></tr>
+          <tr><td>Solar PV</td><td>Roof-integrated glass-glass modules (both faces glass-protected against moisture and mechanical stress); 30-year power output guarantee.</td></tr>
+          <tr><td>Fire detection</td><td>Interlinked, mains-powered smoke detectors in entrance and landing, with battery back-up and low-battery signal.</td></tr>
+          <tr><td>Services location</td><td>Installations grouped under the stairs in the compact variants, keeping the living space free.</td></tr>
+          </tbody></table></div>
+
+        <h4 id="tn7">7. Plumbing and sanitary</h4>
+        <ul>
+          <li><b>Bathroom:</b> shower area, wall-hung WC, washbasin and wall mirror; walls of water-resistant board, tiled floor.</li>
+          <li><b>Separate toilet</b> (where present): wall-hung WC and hand basin.</li>
+          <li><b>Kitchen:</b> water, drainage and electrical connections prepared; kitchen units are optional.</li>
+          <li><b>Laundry:</b> washing-machine connection in every dwelling (sanitary room, landing or attic); Type C also has a dryer connection in the attic.</li>
+          <li><b>Drainage:</b> vent stack terminated through the roof; external sewer connection made on site.</li>
+          <li><b>Options with installation impact:</b> outdoor tap on rear façade; lighting points on front and rear façade; power supply and preparation for sun shading; additional PV panels; rear extension; dormer and extra roof windows.</li>
+        </ul>
+
+        <h4 id="tn8">8. Performance targets</h4>
+        <div class="tn-two">
+          <div class="tw"><table><caption><b>Table 3.</b> Thermal insulation (NTA 8800).</caption>
+            <thead><tr><th>Element</th><th>Required Rc</th><th>Design Rc</th></tr></thead><tbody>
+            <tr><td>Roof</td><td>6.3 m²K/W</td><td>6.3 m²K/W</td></tr>
+            <tr><td>Façade</td><td>4.7 m²K/W</td><td>4.7 m²K/W</td></tr>
+            <tr><td>Gable wall</td><td>4.7 m²K/W</td><td>7.0 m²K/W</td></tr>
+            <tr><td>Ground floor</td><td>3.7 m²K/W</td><td>4.0 m²K/W</td></tr>
+            </tbody></table></div>
+          <div class="tw"><table><caption><b>Table 4.</b> Energy and environmental performance.</caption>
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+            <tr><td>Regulatory compliance</td><td>Bbl requirements for new build; BENG</td></tr>
+            <tr><td>Airtightness</td><td>qv;10 ≤ 0.4 dm³/s·m² (Bbl minimum 0.625)</td></tr>
+            <tr><td>Energy label</td><td>A+++ minimum (A++++ feasible depending on orientation)</td></tr>
+            <tr><td>Environmental performance (MPG)</td><td>&lt; 0.5 €/m² GFA·yr (limit 0.8), A1 dataset</td></tr>
+            <tr><td>Service life</td><td>50 years</td></tr>
+            <tr><td>Relocatability</td><td>Up to 2 relocations within service life</td></tr>
+            <tr><td>Material origin</td><td>≥ 20% (by mass) non-virgin or bio-based</td></tr>
+            <tr><td>Carbon storage</td><td>≈ 7,000 kg CO₂ stored in the structure (Type A)</td></tr>
+            <tr><td>Transport</td><td>Up to 80% fewer vehicle movements to site than conventional construction</td></tr>
+            <tr><td>PFAS</td><td>Closed soil balance</td></tr>
+            </tbody></table></div>
+        </div>
+
+        <figure class="tn-chart"><div class="c-legend"><span><i class="sw c-req"></i>Required (NTA 8800)</span><span><i class="sw c-a"></i>Design value</span></div>
+<svg viewBox="0 0 540 205" class="chart" role="img" aria-label="Figure 2: thermal resistance Rc, required versus design: roof 6.3 and 6.3, facade 4.7 and 4.7, gable wall 4.7 and 7.0, ground floor 3.7 and 4.0"><line x1="40" y1="170.0" x2="530" y2="170.0" class="c-grid"/><text x="34" y="174.0" text-anchor="end" class="c-ax">0</text><line x1="40" y1="130.0" x2="530" y2="130.0" class="c-grid"/><text x="34" y="134.0" text-anchor="end" class="c-ax">2</text><line x1="40" y1="90.0" x2="530" y2="90.0" class="c-grid"/><text x="34" y="94.0" text-anchor="end" class="c-ax">4</text><line x1="40" y1="50.0" x2="530" y2="50.0" class="c-grid"/><text x="34" y="54.0" text-anchor="end" class="c-ax">6</text><line x1="40" y1="10.0" x2="530" y2="10.0" class="c-grid"/><text x="34" y="14.0" text-anchor="end" class="c-ax">8</text><g class="c-hit" data-tip="Roof&#10;Required Rc 6.3 m²K/W"><rect x="50" y="10" width="42" height="160" class="c-hitbox"/><path d="M54 170 V48.0 Q54 44.0 58 44.0 H84 Q88 44.0 88 48.0 V170 Z" class="c-req"/><text x="71.0" y="39.0" text-anchor="middle" class="c-val">6.3</text></g><g class="c-hit" data-tip="Roof&#10;Design Rc 6.3 m²K/W"><rect x="86" y="10" width="42" height="160" class="c-hitbox"/><path d="M90 170 V48.0 Q90 44.0 94 44.0 H120 Q124 44.0 124 48.0 V170 Z" class="c-a"/><text x="107.0" y="39.0" text-anchor="middle" class="c-val">6.3</text></g><text x="89" y="188" text-anchor="middle" class="c-ax">Roof</text><g class="c-hit" data-tip="Façade&#10;Required Rc 4.7 m²K/W"><rect x="170" y="10" width="42" height="160" class="c-hitbox"/><path d="M174 170 V80.0 Q174 76.0 178 76.0 H204 Q208 76.0 208 80.0 V170 Z" class="c-req"/><text x="191.0" y="71.0" text-anchor="middle" class="c-val">4.7</text></g><g class="c-hit" data-tip="Façade&#10;Design Rc 4.7 m²K/W"><rect x="206" y="10" width="42" height="160" class="c-hitbox"/><path d="M210 170 V80.0 Q210 76.0 214 76.0 H240 Q244 76.0 244 80.0 V170 Z" class="c-a"/><text x="227.0" y="71.0" text-anchor="middle" class="c-val">4.7</text></g><text x="209" y="188" text-anchor="middle" class="c-ax">Façade</text><g class="c-hit" data-tip="Gable wall&#10;Required Rc 4.7 m²K/W"><rect x="290" y="10" width="42" height="160" class="c-hitbox"/><path d="M294 170 V80.0 Q294 76.0 298 76.0 H324 Q328 76.0 328 80.0 V170 Z" class="c-req"/><text x="311.0" y="71.0" text-anchor="middle" class="c-val">4.7</text></g><g class="c-hit" data-tip="Gable wall&#10;Design Rc 7.0 m²K/W"><rect x="326" y="10" width="42" height="160" class="c-hitbox"/><path d="M330 170 V34.0 Q330 30.0 334 30.0 H360 Q364 30.0 364 34.0 V170 Z" class="c-a"/><text x="347.0" y="25.0" text-anchor="middle" class="c-val">7.0</text></g><text x="329" y="188" text-anchor="middle" class="c-ax">Gable wall</text><g class="c-hit" data-tip="Ground floor&#10;Required Rc 3.7 m²K/W"><rect x="410" y="10" width="42" height="160" class="c-hitbox"/><path d="M414 170 V100.0 Q414 96.0 418 96.0 H444 Q448 96.0 448 100.0 V170 Z" class="c-req"/><text x="431.0" y="91.0" text-anchor="middle" class="c-val">3.7</text></g><g class="c-hit" data-tip="Ground floor&#10;Design Rc 4.0 m²K/W"><rect x="446" y="10" width="42" height="160" class="c-hitbox"/><path d="M450 170 V94.0 Q450 90.0 454 90.0 H480 Q484 90.0 484 94.0 V170 Z" class="c-a"/><text x="467.0" y="85.0" text-anchor="middle" class="c-val">4.0</text></g><text x="449" y="188" text-anchor="middle" class="c-ax">Ground floor</text><text x="12" y="90.0" transform="rotate(-90 12 90.0)" text-anchor="middle" class="c-ax">Rc (m²K/W)</text></svg>
+<figcaption><b>Figure 2.</b> Thermal resistance (Rc) of the building envelope: required minimum vs design value. The gable wall exceeds its requirement by about 50%. Values as in Table 3.</figcaption></figure>
+<div class="c-tip" id="cTip" role="tooltip" hidden></div>
+        <h4 id="tn9">9. Circularity and production</h4>
+        <p>Circular strategies follow the R-ladder. Whole dwellings are demountable and can be re-erected elsewhere (R3, reuse); building components are designed to be replaceable individually without replacing the dwelling (R4, repair); production residues and waste streams are minimised (R2, reduce). Bio-based alternatives are available for façade cladding, window frames, trims, roof covering (sedum), canopies and shutters, and for insulation (wood fibre, straw). Production takes place in energy-positive factories with on-site PV.</p>
+
+        <h4 id="tn10">10. Implications for installation modelling</h4>
+        <ul>
+          <li>Ducts, pipes and cables are routed inside the prefabricated wall, floor and roof elements, so service zones, penetrations and connector positions must be fixed before factory production.</li>
+          <li>The exposed CLT ceilings leave no concealed zone above the upper floor; horizontal distribution relies on the dropped ceilings in the entrance, landing and sanitary rooms and on boxed-in vertical shafts.</li>
+          <li>Grouping the installations under the stairs in the compact variants requires tight coordination of equipment clearances and maintenance access.</li>
+          <li>Roof and façade penetrations for the vent stack and ventilation must be coordinated with the prefab roof elements and the integrated PV layout.</li>
+          <li>Airtightness (qv;10 ≤ 0.4) requires every service penetration through the vapour control layer to be detailed and sealed.</li>
+          <li>Optional items (outdoor tap, façade lighting, sun-shading supply, extra PV, extensions) need pre-defined provisions in the base models.</li>
+        </ul>
+        </div>
+      </div>
+    </article>
+<p style="margin-top:24px"><a href="index.html#notes">← Back to profile</a></p>
+</main>
+<footer>
+  <div class="wrap"><div class="fbase"><span>© 2026 Alinda Bhattacharjee</span><span class="brand" style="font-size:18px">Alinda<span class="dot">.B</span></span></div></div>
+</footer>
+<script>
+(function(){
+  const root=document.documentElement,btn=document.getElementById('themeBtn'),lbl=document.getElementById('themeLbl');
+  function apply(t){root.setAttribute('data-theme',t);const d=t==='dark';btn.setAttribute('aria-pressed',String(d));lbl.textContent=d?'Light mode':'Dark mode';}
+  let saved=null;try{saved=localStorage.getItem('ab-theme');}catch(e){}
+  apply(saved==='dark'?'dark':'light');
+  btn.addEventListener('click',()=>{const t=root.getAttribute('data-theme')==='dark'?'light':'dark';apply(t);try{localStorage.setItem('ab-theme',t);}catch(e){}});
+})();
+
+
+
+
+
+(function(){
+  document.querySelectorAll('.tn-toggle').forEach(b=>{const body=document.getElementById(b.getAttribute('aria-controls'));
+    b.addEventListener('click',()=>{const o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!o));body.hidden=o;b.firstChild.textContent=o?'Read full technical note ':'Hide full technical note ';});});
+  document.querySelectorAll('.tn-toc a').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({block:'start'});}}));
+})();
+/* auto-collapse a technical note once the reader has scrolled past its end */
+(function(){
+  const tip=document.getElementById('cTip');
+  document.querySelectorAll('#residential-tech .c-hit').forEach(g=>{
+    g.addEventListener('mousemove',e=>{tip.textContent=g.dataset.tip;tip.hidden=false;tip.style.left=Math.min(e.clientX+14,innerWidth-270)+'px';tip.style.top=(e.clientY+14)+'px';});
+    g.addEventListener('mouseleave',()=>{tip.hidden=true;});
+  });
+})();
+
+
+</script>
+</body></html>
