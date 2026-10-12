@@ -552,6 +552,36 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
 .bv:fullscreen{width:100vw;height:100vh;border:0}
 .bv:fullscreen .bv-stage{height:auto;flex:1}
 @media (max-width:700px){.bv-stage{height:clamp(360px,110vw,520px)}.bv-leg{gap:2px 14px;font-size:13px}}
+
+/* model + video pair */
+.bv-pair{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.bv-pair .bv-bar{min-height:44px;box-sizing:border-box}
+.bv-pair .bv-stage{height:clamp(340px,34vw,520px)}
+.bvv{margin:0;border:1px solid var(--bv-line);background:var(--bg);display:flex;flex-direction:column;min-width:0}
+.bvv-t{font-size:14px;color:var(--muted);padding:0 4px}
+.bvv-stage{position:relative;flex:1;min-height:220px;background:var(--bv-bg);border-bottom:1px solid var(--bv-line);overflow:hidden}
+.bvv-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:var(--bv-bg)}
+.bvv-cap{font-size:14px;color:var(--muted);padding:10px 12px;margin:0}
+@media (max-width:900px){.bv-pair{grid-template-columns:minmax(0,1fr)}.bvv-stage{flex:none;aspect-ratio:16/9;min-height:0}}
+/* get in touch form */
+.gform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px;margin-top:20px;max-width:900px}
+.gform .full{grid-column:1/-1}
+.gform label{display:block;font-size:14px;color:var(--muted);margin-bottom:4px}
+.gform input,.gform textarea{width:100%;box-sizing:border-box;font:inherit;font-size:16px;color:var(--fg);background:var(--bg);border:1px solid var(--rule);border-radius:2px;padding:8px 10px}
+.gform textarea{min-height:150px;resize:vertical}
+.gform input:focus,.gform textarea:focus{outline:2px solid var(--link);outline-offset:0;border-color:var(--link)}
+.gform [aria-invalid="true"]{border-color:#c4262e}
+.gform .err{font-size:13px;color:#c4262e;min-height:1em;margin-top:3px}
+.gform .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.gform .btn{margin-top:4px}
+.gform .btn[disabled]{opacity:.6;cursor:wait}
+.gform-status{grid-column:1/-1;margin:0;font-size:15px}
+.gform-status.ok{color:#2f7d46}
+.gform-status.bad{color:#c4262e}
+@media (max-width:640px){.gform{grid-template-columns:minmax(0,1fr)}}
+/* visitor counter */
+.vcount{text-align:center;font-size:13px;color:var(--muted);padding:0 0 18px}
+.vcount[hidden]{display:none}
 </style>
 </head><body>
 <header class="wrap util">
@@ -595,7 +625,7 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
 <div class="wrap body" id="about">
   <section class="panel" aria-labelledby="about-h">
     <h2 id="about-h">About me</h2>
-    <p>Alinda Bhattacharjee is a BIM Engineer and construction technology researcher. At HawarIT, he works on Revit-based HVAC/MEP design and prefabrication for Dutch residential and commercial projects (NEN/ISSO), and automates BIM workflows using Dynamo and pyRevit.</p>
+    <p>Alinda Bhattacharjee is a BIM Engineer and construction technology researcher. At HawarIT, he works on Revit-based HVAC/MEP design and prefabrication for Dutch residential and commercial projects (NEN/ISSO), and automates BIM workflows using Dynamo.</p>
     <p>His research experience covers UAV photogrammetry, point-cloud processing, BIM-based progress monitoring and AI-driven construction applications. He is interested in LLMs, digital twins and DfMA to develop intelligent and automated construction workflows.</p>
     <a class="more" href="#experience">View experience</a>
   </section>
@@ -621,7 +651,7 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
   <p class="rs-lead">My research aims to connect BIM, fabrication and construction through more automated, data-driven workflows.</p>
   <div class="rstate">
     <div><div class="rs-k">What I have done</div><p>In my undergraduate research, I used UAV photogrammetry and BIM to monitor construction progress by comparing as-built point clouds with the planned model and schedule.</p></div>
-    <div><div class="rs-k">What I am building toward</div><p>In my current work, I automate prefabrication workflows in Revit, Dynamo and pyRevit so that design data reaches fabrication with fewer manual steps.</p></div>
+    <div><div class="rs-k">What I am building toward</div><p>In my current work, I automate prefabrication workflows in Revit and Dynamo so that design data reaches fabrication with fewer manual steps.</p></div>
     <div><div class="rs-k">What I want to research next</div><p>In graduate research, I want to study how computer vision, LiDAR, digital twins and large language models can keep BIM models closer to site reality.</p></div>
   </div>
 </section>
@@ -629,7 +659,7 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
 <section class="wrap sec" id="publications" aria-labelledby="pub-h">
   <div class="sec-head"><h2 id="pub-h">Publications &amp; projects</h2><a class="meta" href="https://scholar.google.com/citations?user=PA7FRkMAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar ↗</a></div>
   <div class="atabs" role="tablist" aria-label="Publications and projects"><button role="tab" id="tab0" aria-controls="tp0" aria-selected="true" tabindex="0">Publications</button><button role="tab" id="tab1" aria-controls="tp1" aria-selected="false" tabindex="-1">Research projects</button><button role="tab" id="tab2" aria-controls="tp2" aria-selected="false" tabindex="-1">Industry projects</button><button role="tab" id="tab3" aria-controls="tp3" aria-selected="false" tabindex="-1">Academic projects</button></div>
-  <div role="tabpanel" id="tp0" aria-labelledby="tab0" class="agrid"><article class="acard" id="pub0"><div class="akind">Research article<span class="dot" aria-hidden="true"></span><span class="oa">Open access</span></div><h3><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener">Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate"><i>Civil Engineering Sciences</i> · June 2026</div><div class="alink"><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Rana, M. J., Zaman, A. A. U., &amp; Dang, H. (2026). Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM for enhanced decision-making and optimization. Civil Engineering Sciences, 2, Article 0022. doi:10.34133/cesci.0022">Cite</button></div></article><article class="acard" id="pub1"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener">Automation in construction quality control: Integrating UAV, CNNs, and photogrammetry for structural element detection</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Ahmed, E., &amp; Rana, M. J. (2025). Automation in construction quality control: Integrating Unmanned Aerial Vehicle (UAV), CNNs, and photogrammetry for structural element detection and measurement precision. Advances in Engineering Research, 181–189. doi:10.2991/978-94-6463-884-4_22">Cite</button></div></article><article class="acard" id="pub2"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener">Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach</a></h3><div class="aauth">Estiak Ahmed, <b>Alinda Bhattacharjee</b>, Afia Anzum</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Ahmed, E., Bhattacharjee, A., &amp; Anzum, A. (2025). Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach. Advances in Engineering Research, 120–127. doi:10.2991/978-94-6463-884-4_15">Cite</button></div></article></div><div role="tabpanel" id="tp1" aria-labelledby="tab1" class="agrid" hidden><article class="acard"><div class="akind">Undergraduate thesis<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Real-time construction progress monitoring: Integrating UAV, photogrammetry and BIM technologies</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology · 2024</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Journal output</span></div><h3><a href="#pub0">UAV photogrammetry, point clouds and 4D BIM for element-level progress detection in Navisworks</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate">88.2% accuracy · 2026</div><div class="alink"><a href="#pub0"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Conference output</span></div><h3><a href="#pub1">CNN-based detection of structural elements and measurement precision from UAV imagery</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate">2025</div><div class="alink"><a href="#pub1"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Seminar project<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Application of BIM in Building Energy Performance Simulation (BEPS)</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div><div role="tabpanel" id="tp2" aria-labelledby="tab2" class="agrid" hidden><article class="acard"><div class="akind">Project case study<span class="dot" aria-hidden="true"></span><span class="">Revit → IFC</span></div><h3><a href="#bim-model">Complete HVAC and plumbing design for a single-family residential building</a></h3><div class="aauth">Case study with interactive BIM model and navigator</div><div class="adate">2025 – Present</div><div class="alink"><a href="#bim-model"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View 3D model</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">Prefabrication</span></div><h3><a href="#experience">Prefabricated HVAC and plumbing design for 7+ multistoried residential and commercial apartments (NEN / ISSO)</a></h3><div class="aauth">Including prefabrication drawings for a 23-story building</div><div class="adate">January 2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">NEN / ISSO</span></div><h3><a href="#residential-tech">50+ complete HVAC and plumbing installation models for single residential houses</a></h3><div class="aauth">Autodesk Revit · Dutch NEN and ISSO compliance</div><div class="adate">2025 – Present</div><div class="alink"><a href="#residential-tech"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article><article class="acard"><div class="akind">Automation<span class="dot" aria-hidden="true"></span><span class="">Dynamo · pyRevit</span></div><h3><a href="#experience">Automated prefabrication assemblies and RFA families for plumbing and ventilation systems</a></h3><div class="aauth">Plus visual-programming checks of reducer and Muff (MOF) spigot connections</div><div class="adate">2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Calculation project<span class="dot" aria-hidden="true"></span><span class="">Vabi Elements</span></div><h3><a href="#heat-loss">Heat-loss calculation with Vabi Elements to NEN-EN 12831 and ISSO 51 / 53 / 57</a></h3><div class="aauth">Room-by-room heating demand, cooling load and zone-specific calculations</div><div class="adate">Technical note</div><div class="alink"><a href="#heat-loss"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article></div><div role="tabpanel" id="tp3" aria-labelledby="tab3" class="agrid" hidden><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">ETABS</span></div><h3><a href="#projects">Structural analysis of a twelve-story residential building</a></h3><div class="aauth">Structural modelling and analysis</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Primavera P6</span></div><h3><a href="#projects">Project planning and scheduling with duration optimization</a></h3><div class="aauth">WBS, scheduling and resource allocation</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Group project</span></div><h3><a href="#projects">Residential building design and estimation</a></h3><div class="aauth">Working drawings (5-story) and material cost estimate (6-story)</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div>
+  <div role="tabpanel" id="tp0" aria-labelledby="tab0" class="agrid"><article class="acard" id="pub0"><div class="akind">Research article<span class="dot" aria-hidden="true"></span><span class="oa">Open access</span></div><h3><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener">Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate"><i>Civil Engineering Sciences</i> · June 2026</div><div class="alink"><a href="https://doi.org/10.34133/cesci.0022" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Rana, M. J., Zaman, A. A. U., &amp; Dang, H. (2026). Integrated information system for periodic construction progress monitoring: Utilizing UAV, photogrammetry, and BIM for enhanced decision-making and optimization. Civil Engineering Sciences, 2, Article 0022. doi:10.34133/cesci.0022">Cite</button></div></article><article class="acard" id="pub1"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener">Automation in construction quality control: Integrating UAV, CNNs, and photogrammetry for structural element detection</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_22" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Bhattacharjee, A., Ahmed, E., &amp; Rana, M. J. (2025). Automation in construction quality control: Integrating Unmanned Aerial Vehicle (UAV), CNNs, and photogrammetry for structural element detection and measurement precision. Advances in Engineering Research, 181–189. doi:10.2991/978-94-6463-884-4_22">Cite</button></div></article><article class="acard" id="pub2"><div class="akind">Conference paper<span class="dot" aria-hidden="true"></span><span class="">Peer-reviewed</span></div><h3><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener">Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach</a></h3><div class="aauth">Estiak Ahmed, <b>Alinda Bhattacharjee</b>, Afia Anzum</div><div class="adate"><i>Advances in Engineering Research</i> · 2025</div><div class="alink"><a href="https://doi.org/10.2991/978-94-6463-884-4_15" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="#c4262e" stroke-width="1.4"/><path d="M15 2v5h5" fill="none" stroke="#c4262e" stroke-width="1.4"/><rect x="3" y="11" width="13" height="6" fill="#c4262e"/><text x="9.5" y="15.6" text-anchor="middle" font-size="4.6" font-family="Arial" font-weight="700" fill="#fff">PDF</text></svg>View article</a><button class="citebtn" data-cite-text="Ahmed, E., Bhattacharjee, A., &amp; Anzum, A. (2025). Reducing false alarms in buildings with UAV-based fire detection and monitoring through a cloud-integrated approach. Advances in Engineering Research, 120–127. doi:10.2991/978-94-6463-884-4_15">Cite</button></div></article></div><div role="tabpanel" id="tp1" aria-labelledby="tab1" class="agrid" hidden><article class="acard"><div class="akind">Undergraduate thesis<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Real-time construction progress monitoring: Integrating UAV, photogrammetry and BIM technologies</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology · 2024</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Journal output</span></div><h3><a href="#pub0">UAV photogrammetry, point clouds and 4D BIM for element-level progress detection in Navisworks</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Hongtao Dang</div><div class="adate">88.2% accuracy · 2026</div><div class="alink"><a href="#pub0"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Research project<span class="dot" aria-hidden="true"></span><span class="">Conference output</span></div><h3><a href="#pub1">CNN-based detection of structural elements and measurement precision from UAV imagery</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b>, … Md Jewel Rana</div><div class="adate">2025</div><div class="alink"><a href="#pub1"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Seminar project<span class="dot" aria-hidden="true"></span><span class="">KUET</span></div><h3><a href="#research-exp">Application of BIM in Building Energy Performance Simulation (BEPS)</a></h3><div class="aauth"><b>Alinda Bhattacharjee</b></div><div class="adate">Khulna University of Engineering &amp; Technology</div><div class="alink"><a href="#research-exp"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div><div role="tabpanel" id="tp2" aria-labelledby="tab2" class="agrid" hidden><article class="acard"><div class="akind">Project case study<span class="dot" aria-hidden="true"></span><span class="">Revit → IFC</span></div><h3><a href="#bim-model">Complete HVAC and plumbing design for a single-family residential building</a></h3><div class="aauth">Case study with interactive BIM model and navigator</div><div class="adate">2025 – Present</div><div class="alink"><a href="#bim-model"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View 3D model</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">Prefabrication</span></div><h3><a href="#experience">Prefabricated HVAC and plumbing design for 7+ multistoried residential and commercial apartments (NEN / ISSO)</a></h3><div class="aauth">Including prefabrication drawings for a 23-story building</div><div class="adate">January 2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Industry project<span class="dot" aria-hidden="true"></span><span class="">NEN / ISSO</span></div><h3><a href="#residential-tech">50+ complete HVAC and plumbing installation models for single residential houses</a></h3><div class="aauth">Autodesk Revit · Dutch NEN and ISSO compliance</div><div class="adate">2025 – Present</div><div class="alink"><a href="#residential-tech"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article><article class="acard"><div class="akind">Automation<span class="dot" aria-hidden="true"></span><span class="">Dynamo</span></div><h3><a href="#experience">Automated prefabrication assemblies and RFA families for plumbing and ventilation systems</a></h3><div class="aauth">Plus visual-programming checks of reducer and Muff (MOF) spigot connections</div><div class="adate">2025 – Present</div><div class="alink"><a href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Calculation project<span class="dot" aria-hidden="true"></span><span class="">Vabi Elements</span></div><h3><a href="#heat-loss">Heat-loss calculation with Vabi Elements to NEN-EN 12831 and ISSO 51 / 53 / 57</a></h3><div class="aauth">Room-by-room heating demand, cooling load and zone-specific calculations</div><div class="adate">Technical note</div><div class="alink"><a href="#heat-loss"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View technical note</a></div></article></div><div role="tabpanel" id="tp3" aria-labelledby="tab3" class="agrid" hidden><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">ETABS</span></div><h3><a href="#projects">Structural analysis of a twelve-story residential building</a></h3><div class="aauth">Structural modelling and analysis</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Primavera P6</span></div><h3><a href="#projects">Project planning and scheduling with duration optimization</a></h3><div class="aauth">WBS, scheduling and resource allocation</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article><article class="acard"><div class="akind">Academic project<span class="dot" aria-hidden="true"></span><span class="">Group project</span></div><h3><a href="#projects">Residential building design and estimation</a></h3><div class="aauth">Working drawings (5-story) and material cost estimate (6-story)</div><div class="adate">KUET</div><div class="alink"><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true" class="pdfi"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>View details</a></div></article></div>
 </section>
 
 <section class="wrap sec" id="experience" aria-labelledby="ex-h">
@@ -645,7 +675,7 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
       <li>Delivered prefabricated design and development for 7+ multistoried residential and commercial apartment projects in compliance with Dutch <a href="https://www.nen.nl/" target="_blank" rel="noopener">NEN ↗</a> and <a href="https://www.isso.nl/" target="_blank" rel="noopener">ISSO ↗</a> standards, including HVAC and plumbing prefabrication drawings for a 23-story residential building.</li>
       <li>Produced 50+ complete HVAC and plumbing installation models for single residential buildings in Autodesk Revit, compliant with Dutch <a href="https://www.nen.nl/" target="_blank" rel="noopener">NEN ↗</a> and <a href="https://www.isso.nl/" target="_blank" rel="noopener">ISSO ↗</a> standards.</li>
       <li>Performed 200+ HVAC heat-load calculations and MEP coordination as Project Engineer.</li>
-      <li>Used Dynamo and pyRevit to automate prefabrication assemblies for plumbing and ventilation systems and to generate RFA families for complete apartment plumbing assemblies with accurate connector placement.</li>
+      <li>Used Dynamo to automate prefabrication assemblies for plumbing and ventilation systems and to generate RFA families for complete apartment plumbing assemblies with accurate connector placement.</li>
       <li>Developed visual programming workflows to verify pipe-to-reducer connections and Muff (MOF) spigot connections in plumbing and ventilation systems.</li>
     </ul>
     <article class="case" id="bim-model" aria-labelledby="case-t">
@@ -691,6 +721,7 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
       </div>
 
       <h4 class="bv-h">Interactive BIM model</h4>
+      <div class="bv-pair">
       <div class="bv" id="bv">
         <div class="bv-bar" role="toolbar" aria-label="Model viewer controls">
           <span class="bv-sp"></span>
@@ -702,6 +733,19 @@ footer .fbase{margin-top:0;padding-top:0;border-top:0;align-items:center}
           <div class="bv-load" id="bvLoad" aria-live="polite"><span>Loading 3D model</span><b><i id="bvBar"></i></b></div>
         </div>
         <ul class="bv-leg" aria-label="System colours"><li><i style="background:#c4262e"></i>Heating flow</li><li><i style="background:#0c7dbb"></i>Heating return</li><li><i style="background:#3ba55c"></i>Ventilation supply</li><li><i style="background:#a8a7a2"></i>Ventilation exhaust</li><li><i style="background:#1f2d7b"></i>Cold water</li><li><i style="background:#e9711c"></i>Hot water</li><li><i style="background:#6b6b6b"></i>Drainage</li><li><i style="background:#c3c7cd"></i>Equipment, fittings &amp; supports</li></ul>
+      </div>
+      <figure class="bvv" aria-labelledby="bvv-t">
+        <div class="bv-bar"><span class="bvv-t" id="bvv-t">Project video</span></div>
+        <div class="bvv-stage">
+          <!-- VIDEO SOURCE: project-video.mp4 + project-video.webm (place next to index.html). Poster: project-video-poster.jpg -->
+          <video controls playsinline preload="metadata" poster="project-video-poster.jpg">
+            <source src="project-video.mp4" type="video/mp4">
+            <source src="project-video.webm" type="video/webm">
+            Your browser cannot play this video. <a href="project-video.mp4">Download the video</a>.
+          </video>
+        </div>
+        <figcaption class="bvv-cap">Video of the same HVAC and plumbing BIM model (31 s, no audio).</figcaption>
+      </figure>
       </div>
       <p class="bv-hint">Drag to rotate · scroll or pinch to zoom · right-drag or two fingers to pan. IFC geometry simplified for web display.</p>
     </article>
@@ -830,7 +874,7 @@ async function init(){
   <div class="tbl-wrap">
     <table>
       <tbody>
-        <tr><th scope="row">BIM &amp; MEP</th><td>Autodesk Revit (HVAC/MEP, prefabrication and installation modeling), Dynamo, pyRevit, Navisworks, Autodesk Construction Cloud, Fusion 360, Autodesk Design Review</td></tr>
+        <tr><th scope="row">BIM &amp; MEP</th><td>Autodesk Revit (HVAC/MEP, prefabrication and installation modeling), Dynamo, Navisworks, Autodesk Construction Cloud, Fusion 360, Autodesk Design Review</td></tr>
         <tr><th scope="row">Reality Capture</th><td>UAV operation, DroneDeploy, RealityCapture, photogrammetry, point clouds</td></tr>
         <tr><th scope="row">Programming</th><td>Python, C++</td></tr>
         <tr><th scope="row">ML Libraries</th><td>scikit-learn, PyTorch, NumPy, pandas, matplotlib</td></tr>
@@ -895,10 +939,25 @@ async function init(){
   </div>
   <div class="profiles"><div class="k">Profiles</div><ul><li><a href="https://www.linkedin.com/in/alinda025" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="bi"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span><b>LinkedIn</b><br>linkedin.com/in/alinda025</span></a></li><li><a href="https://scholar.google.com/citations?user=PA7FRkMAAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="bi"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg><span><b>Google Scholar</b><br>scholar.google.com</span></a></li><li><a href="https://x.com/AlindaBhattach2" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="bi"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg><span><b>X</b><br>x.com/AlindaBhattach2</span></a></li><li><a href="https://www.youtube.com/@BIM_Mentor_AEC" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="bi"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span><b>YouTube</b><br>youtube.com/@BIM_Mentor_AEC</span></a></li></ul></div>
 </section>
+
+<section class="wrap sec" id="get-in-touch" aria-labelledby="git-h">
+  <div class="sec-head"><h2 id="git-h">Get in Touch</h2></div>
+  <form class="gform" id="gform" action="https://formspree.io/f/xzedvqdp" method="POST" novalidate>
+    <div><label for="gf-name">Name</label><input id="gf-name" name="name" type="text" autocomplete="name" maxlength="100" required><div class="err" id="gf-name-e"></div></div>
+    <div><label for="gf-email">Email address</label><input id="gf-email" name="email" type="email" autocomplete="email" maxlength="150" required><div class="err" id="gf-email-e"></div></div>
+    <div class="full"><label for="gf-subject">Subject</label><input id="gf-subject" name="subject" type="text" maxlength="150" required><div class="err" id="gf-subject-e"></div></div>
+    <div class="full"><label for="gf-message">Message</label><textarea id="gf-message" name="message" maxlength="5000" required></textarea><div class="err" id="gf-message-e"></div></div>
+    <div class="hp" aria-hidden="true"><label for="gf-gotcha">Leave this field empty</label><input id="gf-gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+    <input type="hidden" name="_subject" id="gf-_subject" value="">
+    <div class="full"><button class="btn" type="submit" id="gf-send">Send Message</button></div>
+    <p class="gform-status" id="gf-status" role="status" aria-live="polite"></p>
+  </form>
+</section>
 </main>
 
 <footer>
   <div class="wrap"><div class="fbase"><span>© 2026 Alinda Bhattacharjee</span><span class="brand" style="font-size:18px">Alinda<span class="dot">.B</span></span></div></div>
+  <div class="vcount" id="vcount" hidden>Total visits: <span id="vcount-n"></span></div>
 </footer>
 
 <script>
@@ -923,6 +982,75 @@ async function init(){
   document.querySelectorAll('a[href="#pub0"],a[href="#pub1"],a[href="#pub2"]').forEach(a=>a.addEventListener('click',()=>sel(tabs[0])));
 })();
 
+</script>
+
+<!-- ================= SITE SETTINGS: edit these three values only ================= -->
+<script>
+window.SITE_CONFIG = {
+  formspreeFormId: "xzedvqdp",      /* e.g. "xyzabcde"  (from formspree.io/f/xyzabcde)          */
+  goatcounterCode: "",      /* e.g. "alindab"   (from https://alindab.goatcounter.com) */
+  ga4MeasurementId: ""      /* optional, e.g. "G-XXXXXXXXXX" (Google Analytics 4)      */
+};
+</script>
+<!-- ============================================================================== -->
+<script>
+/* Get in Touch form (Formspree, AJAX) */
+(function(){
+  var cfg=window.SITE_CONFIG||{}, f=document.getElementById('gform'); if(!f) return;
+  var st=document.getElementById('gf-status'), btn=document.getElementById('gf-send'), t0=Date.now();
+  var EMAIL='alinda.bhattacharjee.aec@gmail.com';
+  var fields={name:[2,'Please enter your name.'],email:[0,'Please enter a valid email address.'],subject:[3,'Please enter a subject.'],message:[10,'Please write a message of at least 10 characters.']};
+  function check(k){var el=document.getElementById('gf-'+k),v=el.value.trim(),ok=k==='email'?/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v):v.length>=fields[k][0];
+    el.setAttribute('aria-invalid',ok?'false':'true');document.getElementById('gf-'+k+'-e').textContent=ok?'':fields[k][1];return ok;}
+  Object.keys(fields).forEach(function(k){document.getElementById('gf-'+k).addEventListener('blur',function(){if(this.value)check(k);});});
+  function say(msg,cls){st.textContent=msg;st.className='gform-status '+(cls||'');}
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); say('');
+    var ok=Object.keys(fields).map(check).every(Boolean);
+    if(!ok){say('Please correct the highlighted fields.','bad');return;}
+    if(document.getElementById('gf-gotcha').value||Date.now()-t0<3000){say('Your message could not be sent. Please try again in a moment.','bad');return;}
+    if(!cfg.formspreeFormId){say('The message form is not available right now. Please email me directly at '+EMAIL+'.','bad');return;}
+    document.getElementById('gf-_subject').value='Website message: '+document.getElementById('gf-subject').value.trim();
+    btn.disabled=true; btn.textContent='Sending…';
+    fetch('https://formspree.io/f/'+encodeURIComponent(cfg.formspreeFormId),{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+      .then(function(r){return r.json().catch(function(){return {};}).then(function(d){return {ok:r.ok,d:d};});})
+      .then(function(x){
+        if(x.ok){f.reset();Object.keys(fields).forEach(function(k){document.getElementById('gf-'+k).removeAttribute('aria-invalid');});
+          say('Thank you. Your message has been sent, and I will reply by email.','ok');}
+        else{var m=(x.d&&x.d.errors||[]).map(function(e){return e.message;}).join(' ');
+          say('Sorry, your message could not be sent'+(m?' ('+m+')':'')+'. Please try again or email me directly at '+EMAIL+'.','bad');}
+      })
+      .catch(function(){say('Sorry, your message could not be sent because of a network problem. Please try again or email me directly at '+EMAIL+'.','bad');})
+      .then(function(){btn.disabled=false;btn.textContent='Send Message';});
+  });
+})();
+/* Analytics: GoatCounter (public total + private dashboard) and optional GA4 (engagement time) */
+(function(){
+  var cfg=window.SITE_CONFIG||{}, code=(cfg.goatcounterCode||'').trim();
+  if(code && /^[a-z0-9-]+$/i.test(code)){
+    var base='https://'+code+'.goatcounter.com';
+    var s=document.createElement('script'); s.async=true; s.src='https://gc.zgo.at/count.js';
+    s.setAttribute('data-goatcounter',base+'/count');
+    s.onload=function(){
+      /* record which sections are viewed (aggregated events, no personal data) */
+      if(!('IntersectionObserver' in window)||!window.goatcounter) return;
+      var seen={}, io=new IntersectionObserver(function(es){es.forEach(function(en){
+        var id=en.target.id; if(en.isIntersecting&&!seen[id]){seen[id]=1;
+          try{window.goatcounter.count({path:'section-'+id,title:'Section: '+id,event:true});}catch(e){}}});},{threshold:0.4});
+      document.querySelectorAll('main > section[id], #bim-model').forEach(function(el){io.observe(el);});
+    };
+    document.body.appendChild(s);
+    fetch(base+'/counter/TOTAL.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+      if(d&&d.count){document.getElementById('vcount-n').textContent=d.count;document.getElementById('vcount').hidden=false;}
+    }).catch(function(){});
+  }
+  var ga=(cfg.ga4MeasurementId||'').trim();
+  if(/^G-[A-Z0-9]+$/.test(ga)){
+    var g=document.createElement('script'); g.async=true; g.src='https://www.googletagmanager.com/gtag/js?id='+ga; document.head.appendChild(g);
+    window.dataLayer=window.dataLayer||[]; window.gtag=function(){dataLayer.push(arguments);};
+    gtag('js',new Date()); gtag('config',ga,{allow_google_signals:false,allow_ad_personalization_signals:false});
+  }
+})();
 </script>
 
 </body></html>

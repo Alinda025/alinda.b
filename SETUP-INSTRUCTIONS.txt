@@ -1,0 +1,41 @@
+WEBSITE SETUP: contact form, visitor counter and analytics
+==========================================================
+All three services are configured in ONE place: open index.html, search for
+"SITE SETTINGS" (near the end of the file) and fill in the values.
+
+1) CONTACT FORM (Formspree, free plan: 50 messages per month)
+   - Sign up at https://formspree.io with alinda.bhattacharjee.aec@gmail.com and verify the email.
+   - Click "+ New Form", name it "Website contact", send to alinda.bhattacharjee.aec@gmail.com.
+   - Copy the form ID: the part after /f/ in https://formspree.io/f/xyzabcde
+   - DONE: formspreeFormId is already set to "xzedvqdp" in index.html.
+   - In the form settings, add your site address (e.g. https://YOURNAME.github.io) under "Restrict to domain".
+   - Spam protection already built in: hidden honeypot field (_gotcha), 3-second bot check,
+     plus Formspree's own spam filter. The form ID is not a secret; your email is never shown in the code.
+
+2) VISITOR COUNTER + PRIVATE DASHBOARD (GoatCounter, free for personal sites, no cookies)
+   - Sign up at https://www.goatcounter.com and choose a code, e.g. "alindab"
+     (your dashboard becomes https://alindab.goatcounter.com, visible only to you after login).
+   - Settings -> tick "Allow adding visitor counts on your website" -> Save.  (Required for the public counter.)
+   - In index.html set:   goatcounterCode: "alindab",
+   - Dashboard shows: total visits, trends over time, countries (with chart), pages,
+     sections viewed (events named "section-..."), referrers, browsers and screen sizes.
+   - Optional: Settings -> "Ignore IPs" -> add your own IP so your visits are not counted.
+
+3) ENGAGEMENT TIME / VISIT DURATION (optional, Google Analytics 4)
+   GoatCounter does not measure time on site. If you want average engagement time:
+   - Go to https://analytics.google.com -> Admin -> Create property -> Web data stream -> your site URL.
+   - Copy the Measurement ID (starts with G-).
+   - In index.html set:   ga4MeasurementId: "G-XXXXXXXXXX",
+   - Reports -> Engagement shows average engagement time; Reports -> User attributes -> Demographic
+     details shows countries. Google Signals and ad personalisation are switched off in the code.
+   - Note: GA4 uses cookies. Leave this empty if you prefer cookie-free analytics only.
+
+4) VIDEO
+   Upload these files next to index.html: project-video.mp4, project-video.webm, project-video-poster.jpg
+
+5) CHECK AFTER UPLOADING
+   - Send yourself a test message from the "Get in Touch" form (first submission may ask you to
+     confirm the form by email).
+   - Open your site, then the GoatCounter dashboard: your visit appears within a minute.
+   - The "Total visits" line at the very bottom appears once GoatCounter returns real data;
+     it stays hidden if the counter is not configured, so no fake number is ever shown.
