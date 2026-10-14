@@ -16,18 +16,19 @@ All three services are configured in ONE place: open index.html, search for
    - Sign up at https://www.goatcounter.com and choose a code, e.g. "alindab"
      (your dashboard becomes https://alindab.goatcounter.com, visible only to you after login).
    - Settings -> tick "Allow adding visitor counts on your website" -> Save.  (Required for the public counter.)
-   - In index.html set:   goatcounterCode: "alindab",
+   - DONE: goatcounterCode is already set to "alinda" in index.html (dashboard: https://alinda.goatcounter.com).
    - Dashboard shows: total visits, trends over time, countries (with chart), pages,
      sections viewed (events named "section-..."), referrers, browsers and screen sizes.
    - Optional: Settings -> "Ignore IPs" -> add your own IP so your visits are not counted.
 
-3) ENGAGEMENT TIME / VISIT DURATION (optional, Google Analytics 4)
+3) ENGAGEMENT TIME / VISIT DURATION (Google Analytics 4)  -- DONE: G-Y8FEJTMM81 is set in index.html
    GoatCounter does not measure time on site. If you want average engagement time:
    - Go to https://analytics.google.com -> Admin -> Create property -> Web data stream -> your site URL.
    - Copy the Measurement ID (starts with G-).
    - In index.html set:   ga4MeasurementId: "G-XXXXXXXXXX",
    - Reports -> Engagement shows average engagement time; Reports -> User attributes -> Demographic
      details shows countries. Google Signals and ad personalisation are switched off in the code.
+   - Do NOT also paste Google's gtag snippet into the page; the site already loads it (pasting it again double-counts).
    - Note: GA4 uses cookies. Leave this empty if you prefer cookie-free analytics only.
 
 4) VIDEO
