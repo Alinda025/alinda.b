@@ -1,0 +1,14 @@
+Website update: new project "MEP Installation Model for a 126-Apartment Residential Building"
+
+Files (upload all three to the main folder of the alinda.b repository, next to the existing model.glb):
+  index.html            - replaces the current index.html (only additions: project card, case study, second 3D viewer)
+  model-2.glb           - web 3D model (3.7 MB, compressed from the 548 MB IFC)
+  model-2-poster.webp   - preview image shown while the model loads
+
+Steps (same as last time):
+  1. Open https://github.com/alinda025/alinda.b
+  2. Add file -> Upload files
+  3. Drag in the three files above (index.html will replace the old one)
+  4. Commit message: "Add 126-apartment MEP project" -> Commit changes
+  5. Wait 1-2 minutes, then open https://alinda025.github.io/alinda.b/#bim-model-2
+     (press Ctrl+F5 if you still see the old page)
